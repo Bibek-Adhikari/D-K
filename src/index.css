@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Mukta", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --color-brand-blue: #1e3a8a;
@@ -8,9 +10,21 @@
 }
 
 @layer base {
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
   body {
     font-family: var(--font-sans);
     transition: background-color 0.2s ease, color 0.2s ease;
+    background-color: #f9fafb;
+    color: #111827;
+  }
+  html.dark body {
+    background-color: #020617;
+    color: #f1f5f9;
   }
 }
 

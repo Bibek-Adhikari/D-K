@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ShieldCheck, Phone, ArrowRight, Maximize2, X, Sparkles, CheckCircle2 } from 'lucide-react';
+import React from 'react';
+import { ShieldCheck, Phone, ArrowRight } from 'lucide-react';
 import { translations } from '../constants/translations';
 import { BUSINESS_INFO } from '../data/products';
 
@@ -10,13 +10,6 @@ interface AboutSectionProps {
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ lang, onOpenBoq }) => {
   const t = translations[lang];
-  const [activePhoto, setActivePhoto] = useState<'eauset' | 'aisle'>('eauset');
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-
-  const currentPhotoSrc = activePhoto === 'eauset' ? '/assets/eauset_display.jpg' : '/assets/showroom_aisle.jpg';
-  const currentPhotoAlt = activePhoto === 'eauset'
-    ? 'D&K Hardware Eauset Bath Fittings and Luxury Vanity Display Wall'
-    : 'D&K Hardware Parryware Sanitaryware and Showroom Aisle';
 
   return (
     <section id="about-section" className="py-24 bg-white dark:bg-slate-950 transition-colors overflow-hidden">
@@ -24,81 +17,24 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang, onOpenBoq }) =
         
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           
-          {/* Left Column: Authentic Showroom Display (Second Image) with Dual Photo Switcher */}
+          {/* Left Column: Authentic Showroom Display Image (Second Image) with Organic Rounded Border & Trust Badge */}
           <div className="w-full lg:w-1/2 relative group">
-            
-            {/* Gallery Tabs for Both Showroom Views */}
-            <div className="flex items-center gap-2 mb-3 bg-gray-100 dark:bg-slate-900 p-1.5 rounded-2xl w-fit border border-gray-200 dark:border-slate-800 text-xs font-bold">
-              <button
-                onClick={() => setActivePhoto('eauset')}
-                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer ${
-                  activePhoto === 'eauset'
-                    ? 'bg-[#1e3a8a] text-white shadow-xs'
-                    : 'text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-                }`}
-              >
-                <Sparkles className="w-3.5 h-3.5 text-orange-400" />
-                <span>{lang === 'ne' ? 'ईउसेट बाथ फिटिङ' : 'Eauset Bath Fittings'}</span>
-              </button>
-
-              <button
-                onClick={() => setActivePhoto('aisle')}
-                className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer ${
-                  activePhoto === 'aisle'
-                    ? 'bg-[#1e3a8a] text-white shadow-xs'
-                    : 'text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white'
-                }`}
-              >
-                <span>{lang === 'ne' ? 'सेनेटरीवेयर आइल' : 'Sanitaryware Aisle'}</span>
-              </button>
-            </div>
-
-            <div 
-              className="relative z-10 overflow-hidden shadow-2xl aspect-4/3 rounded-[2.5rem] bg-gray-100 dark:bg-slate-800 border border-gray-200/80 dark:border-slate-800 cursor-pointer group/img"
-              onClick={() => setIsLightboxOpen(true)}
-              title="Click to view full photo"
-            >
+            <div className="relative z-10 overflow-hidden shadow-2xl aspect-4/3 rounded-[2.5rem] bg-gray-100 dark:bg-slate-800 border border-gray-100 dark:border-slate-800">
               <img
-                src={currentPhotoSrc}
-                alt={currentPhotoAlt}
-                className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700"
+                src="/assets/eauset_display.jpg"
+                alt="D&K Hardware Eauset Bath Fittings and Luxury Vanity Display Wall"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 referrerPolicy="no-referrer"
               />
-
-              {/* Gradient Vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/20" />
-
-              {/* Expand button */}
-              <div className="absolute top-4 right-4 bg-black/50 hover:bg-black/80 backdrop-blur-xs text-white p-2.5 rounded-xl transition-all shadow-md">
-                <Maximize2 className="w-4 h-4" />
-              </div>
-
-              {/* Bottom Tagline on Image */}
-              <div className="absolute bottom-4 left-5 right-5 text-white">
-                <span className="bg-[#f97316] text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-block mb-1.5 shadow-sm">
-                  {activePhoto === 'eauset' 
-                    ? (lang === 'ne' ? 'ईउसेट आधिकारिक डिस्प्ले' : 'Eauset Aqua Rejuvenation Display')
-                    : (lang === 'ne' ? 'प्यारीवेयर सेनेटरी शोरुम' : 'Parryware Sanitaryware Display')}
-                </span>
-                <p className="text-xs sm:text-sm font-semibold text-white/95 leading-snug drop-shadow-xs">
-                  {activePhoto === 'eauset'
-                    ? (lang === 'ne' 
-                        ? 'शावर प्यानल, बेसिन मिक्सर तथा आधुनिक भ्यानिटी क्याबिनेटहरू' 
-                        : 'Luxury shower systems, mixer faucets & vanity cabinets on live display')
-                    : (lang === 'ne'
-                        ? 'कमोड, वाशबेसिन तथा बाथरुम एसेसोरिजहरूको प्रत्यक्ष प्रदर्शनी'
-                        : 'Water closets, commodes & modern bath accessories ready in stock')}
-                </p>
-              </div>
             </div>
 
             {/* Corner Floating Trust Badge */}
-            <div className="absolute -bottom-5 -right-5 bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-slate-800 hidden sm:block z-20">
-              <div className="text-2xl sm:text-3xl font-black text-[#1e3a8a] dark:text-blue-400 leading-none mb-1">
+            <div className="absolute -bottom-5 -right-5 bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-[2rem] shadow-2xl border border-gray-100 dark:border-slate-800 hidden sm:block z-20">
+              <div className="text-3xl sm:text-4xl font-black text-[#1e3a8a] dark:text-blue-400 leading-none mb-1">
                 100%
               </div>
               <div className="text-[10px] sm:text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-widest">
-                {lang === 'ne' ? 'सक्कली सामग्री' : 'GENUINE PRODUCTS'}
+                {t.genuineOnly}
               </div>
             </div>
           </div>
@@ -106,7 +42,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang, onOpenBoq }) =
           {/* Right Column: Clean Story & Value Pillars */}
           <div className="w-full lg:w-1/2">
             <span className="text-[#f97316] font-bold uppercase tracking-widest text-xs sm:text-sm mb-3 block">
-              {lang === 'ne' ? 'हाम्रो कथा र शोरुम' : 'OUR STORY & SHOWROOM'}
+              {lang === 'ne' ? 'हाम्रो कथा' : 'OUR STORY'}
             </span>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-slate-100 mb-6 leading-[1.15] tracking-tight">
@@ -158,61 +94,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang, onOpenBoq }) =
         </div>
 
       </div>
-
-      {/* Lightbox Modal for Second Image */}
-      {isLightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-          onClick={() => setIsLightboxOpen(false)}
-        >
-          <div
-            className="relative max-w-4xl w-full bg-slate-900 rounded-3xl overflow-hidden border border-slate-700 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setIsLightboxOpen(false)}
-              className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer"
-              title="Close"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="max-h-[75vh] overflow-hidden flex items-center justify-center bg-black">
-              <img
-                src={currentPhotoSrc}
-                alt={currentPhotoAlt}
-                className="max-h-[75vh] w-auto object-contain"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-
-            <div className="p-5 sm:p-6 bg-slate-900 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-slate-800">
-              <div>
-                <span className="text-[#f97316] font-bold text-xs uppercase tracking-wider">
-                  {activePhoto === 'eauset' ? 'Eauset Luxury Fixtures' : 'Parryware Sanitary Aisle'}
-                </span>
-                <h3 className="text-lg sm:text-xl font-bold mt-0.5">
-                  {activePhoto === 'eauset'
-                    ? (lang === 'ne' ? 'ईउसेट एक्वा रेजुभेनेसन बाथ फिटिङ तथा भ्यानिटी डिस्प्ले' : 'Eauset Aqua Rejuvenation Bath Display Wall')
-                    : (lang === 'ne' ? 'प्यारीवेयर सेनेटरीवेयर तथा कमोड डिस्प्ले' : 'Parryware Commodes & Shower Display Aisle')}
-                </h3>
-                <p className="text-xs text-slate-400 mt-1">
-                  Kailash Chowk, Madhyapur Thimi • D&K Hardware and Sanitary Store
-                </p>
-              </div>
-
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setActivePhoto(activePhoto === 'eauset' ? 'aisle' : 'eauset')}
-                  className="bg-white/10 hover:bg-white/20 text-white font-bold text-xs py-2 px-3.5 rounded-xl transition-all"
-                >
-                  {activePhoto === 'eauset' ? 'Switch to Aisle View →' : 'Switch to Eauset View →'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

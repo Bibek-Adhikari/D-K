@@ -23,19 +23,39 @@ import { ActiveView } from './types';
 
 export default function App() {
   const [lang, setLang] = useState<'en' | 'ne'>('en');
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') {
+          return saved;
+        }
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+      } catch {
+        // Fallback to light
+      }
+    }
+    return 'light';
+  });
   const [activeView, setActiveView] = useState<ActiveView>('home');
   const [itemsList, setItemsList] = useState('');
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [addedItems, setAddedItems] = useState<string[]>([]);
 
-  // Sync dark mode class on document element
+  // Sync dark mode class on document element and persist
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
       root.classList.add('dark');
     } else {
       root.classList.remove('dark');
+    }
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      // Storage unavailable
     }
   }, [theme]);
 

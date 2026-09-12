@@ -88,26 +88,23 @@ export const Header: React.FC<HeaderProps> = ({
         </button>
 
         {/* Desktop Navigation Links & Controls */}
-        <div className="hidden lg:flex items-center gap-5">
-          <nav className="flex gap-4 font-semibold text-xs sm:text-sm">
+        <div className="hidden lg:flex items-center gap-6">
+          <nav className="flex gap-6 font-semibold text-xs sm:text-sm">
             {navItems.map((item) => {
               const isActive = activeView === item.view;
               return (
                 <button
                   key={item.view}
                   onClick={() => handleItemClick(item.view)}
-                  className={`py-1 px-2.5 rounded-lg transition-all cursor-pointer select-none relative ${
+                  className={`transition-colors cursor-pointer select-none py-1 ${
                     isActive
-                      ? 'text-[#1e3a8a] dark:text-orange-400 font-bold bg-blue-50 dark:bg-slate-800'
+                      ? 'text-[#f97316] font-bold'
                       : theme === 'light'
                       ? 'text-gray-700 hover:text-[#f97316]'
                       : 'text-slate-200 hover:text-[#f97316]'
                   }`}
                 >
                   {item.label}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-2.5 right-2.5 h-0.5 bg-[#f97316] rounded-full" />
-                  )}
                 </button>
               );
             })}
@@ -132,6 +129,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onToggleTheme}
               aria-label="Toggle Theme"
+              title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
               className={`p-2 rounded-full border transition-all cursor-pointer ${
                 theme === 'light'
                   ? 'border-gray-300 text-gray-800 bg-white hover:bg-gray-100'
@@ -157,13 +155,14 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={onToggleTheme}
             aria-label="Toggle Theme"
-            className={`p-2 rounded-full border transition-colors ${
+            title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+            className={`p-2 rounded-full border transition-colors cursor-pointer ${
               theme === 'light'
                 ? 'border-gray-300 text-gray-800 bg-white'
                 : 'border-slate-700 text-slate-200 bg-slate-900'
             }`}
           >
-            {theme === 'light' ? <Moon size={15} /> : <Sun size={15} />}
+            {theme === 'light' ? <Moon size={15} className="text-gray-700" /> : <Sun size={15} className="text-amber-400" />}
           </button>
 
           <button
@@ -205,7 +204,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onClick={() => handleItemClick(item.view)}
                   className={`text-left text-sm font-semibold p-2.5 rounded-xl transition-colors flex items-center justify-between ${
                     isActive
-                      ? 'bg-blue-50 dark:bg-slate-800 text-[#1e3a8a] dark:text-orange-400 font-bold'
+                      ? 'text-[#f97316] font-bold'
                       : theme === 'light'
                       ? 'text-gray-800 hover:bg-gray-50'
                       : 'text-slate-200 hover:bg-slate-800'
