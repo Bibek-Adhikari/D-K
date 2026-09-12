@@ -3,11 +3,17 @@ export interface ChatMessage {
   content: string;
 }
 
+export interface AssistantResponse {
+  reply: string;
+  source?: 'gemini-3.8-flash' | 'store-knowledge-fallback';
+  geminiConfigured?: boolean;
+}
+
 export async function askGeminiStoreAssistant(
   prompt: string,
   lang: 'en' | 'ne',
   history: ChatMessage[] = []
-): Promise<string> {
+): Promise<AssistantResponse> {
   try {
     const response = await fetch('/api/chat', {
       method: 'POST',
@@ -18,7 +24,11 @@ export async function askGeminiStoreAssistant(
     if (response.ok) {
       const data = await response.json();
       if (data && typeof data.reply === 'string' && data.reply.trim()) {
-        return data.reply;
+        return {
+          reply: data.reply,
+          source: data.source || 'gemini-3.8-flash',
+          geminiConfigured: data.geminiConfigured ?? true,
+        };
       }
     }
   } catch (error) {
@@ -26,7 +36,27 @@ export async function askGeminiStoreAssistant(
   }
 
   // Graceful fallback to rich local store knowledge base
-  return answerStoreInquiryLocal(prompt, lang);
+  return {
+    reply: answerStoreInquiryLocal(prompt, lang),
+    source: 'store-knowledge-fallback',
+    geminiConfigured: false,
+  };
+}
+
+export async function checkAiHealth(): Promise<{ geminiConfigured: boolean; status: string }> {
+  try {
+    const res = await fetch('/api/health');
+    if (res.ok) {
+      const data = await res.json();
+      return {
+        geminiConfigured: !!data.geminiConfigured,
+        status: data.status || 'ok',
+      };
+    }
+  } catch {
+    // ignore
+  }
+  return { geminiConfigured: false, status: 'offline' };
 }
 
 export function answerStoreInquiryLocal(prompt: string, lang: 'en' | 'ne'): string {

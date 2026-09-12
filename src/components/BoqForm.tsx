@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileSpreadsheet, Send, CheckCircle2, Copy, Phone, Plus, RefreshCw } from 'lucide-react';
+import { FileSpreadsheet, Send, CheckCircle2, Copy, Phone, Plus, RefreshCw, MessageSquare } from 'lucide-react';
 import { translations } from '../constants/translations';
 import { BUSINESS_INFO } from '../data/products';
 
@@ -36,6 +36,32 @@ export const BoqForm: React.FC<BoqFormProps> = ({
 
   const handleQuickAdd = (itemText: string) => {
     onItemsListChange(itemsList ? `${itemsList}\n• ${itemText}` : `• ${itemText}`);
+  };
+
+  const constructWhatsAppUrl = (currentInquiryId?: string) => {
+    const lines = [
+      `*Namaste D&K Hardware and Stationery,*`,
+      `I would like to request an instant price quotation / BOQ estimate:`,
+      currentInquiryId ? `• *Inquiry Ref:* ${currentInquiryId}` : '',
+      fullName ? `• *Name:* ${fullName}` : '',
+      phone ? `• *Phone:* ${phone}` : '',
+      `• *Project Type:* ${projectType}`,
+      notes ? `• *Location/Notes:* ${notes}` : '',
+      `\n*Compiled Material / Shopping List:*`,
+      itemsList || '(Pending item selection)',
+    ].filter(Boolean);
+
+    const fullText = lines.join('\n');
+    return `https://wa.me/9779842692437?text=${encodeURIComponent(fullText)}`;
+  };
+
+  const handleShareWhatsApp = (e?: React.MouseEvent) => {
+    if (!itemsList.trim()) {
+      alert(lang === 'ne' ? 'कृपया पहिले सामानहरूको सूची लेख्नुहोस्।' : 'Please enter or select at least one item before sharing via WhatsApp.');
+      return;
+    }
+    const url = constructWhatsAppUrl(inquiryId);
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -184,15 +210,28 @@ export const BoqForm: React.FC<BoqFormProps> = ({
                   <label htmlFor="boq-items-textarea" className="block text-xs font-bold text-gray-700 dark:text-slate-300 uppercase tracking-wider">
                     {t.boq.itemsLabel} <span className="text-[#f97316]">*</span>
                   </label>
-                  {itemsList && (
-                    <button
-                      type="button"
-                      onClick={() => onItemsListChange('')}
-                      className="text-xs text-gray-400 hover:text-[#f97316] transition-colors cursor-pointer"
-                    >
-                      {t.boq.clear}
-                    </button>
-                  )}
+                  <div className="flex items-center gap-3">
+                    {itemsList && (
+                      <button
+                        type="button"
+                        onClick={() => handleShareWhatsApp()}
+                        className="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition-colors cursor-pointer"
+                        title={t.boq.shareWhatsAppPrompt}
+                      >
+                        <MessageSquare size={13} />
+                        <span>{t.boq.shareViaWhatsApp}</span>
+                      </button>
+                    )}
+                    {itemsList && (
+                      <button
+                        type="button"
+                        onClick={() => onItemsListChange('')}
+                        className="text-xs text-gray-400 hover:text-[#f97316] transition-colors cursor-pointer"
+                      >
+                        {t.boq.clear}
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <textarea
                   id="boq-items-textarea"
@@ -228,12 +267,12 @@ export const BoqForm: React.FC<BoqFormProps> = ({
                 </div>
               </div>
 
-              {/* Submit CTA */}
-              <div className="pt-4">
+              {/* Action Buttons: Submit & Share via WhatsApp */}
+              <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#f97316] hover:bg-orange-600 active:bg-orange-700 disabled:opacity-50 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-orange-500/25 text-base flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-95 cursor-pointer"
+                  className="flex-1 bg-[#f97316] hover:bg-orange-600 active:bg-orange-700 disabled:opacity-50 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-orange-500/25 text-sm sm:text-base flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-95 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>
@@ -246,6 +285,18 @@ export const BoqForm: React.FC<BoqFormProps> = ({
                       <span>{t.boq.submitBtn}</span>
                     </>
                   )}
+                </button>
+
+                {/* Share via WhatsApp button */}
+                <button
+                  type="button"
+                  onClick={handleShareWhatsApp}
+                  id="boq-share-whatsapp-btn"
+                  title={t.boq.shareWhatsAppPrompt}
+                  className="bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-emerald-600/25 text-sm sm:text-base flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-95 cursor-pointer whitespace-nowrap"
+                >
+                  <MessageSquare size={18} />
+                  <span>{t.boq.shareViaWhatsApp}</span>
                 </button>
               </div>
 
@@ -276,6 +327,15 @@ export const BoqForm: React.FC<BoqFormProps> = ({
               </div>
 
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <button
+                  onClick={handleShareWhatsApp}
+                  id="boq-success-whatsapp-btn"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-6 rounded-xl text-sm flex items-center gap-2 shadow-md shadow-emerald-600/20 cursor-pointer transition-colors"
+                >
+                  <MessageSquare size={16} />
+                  <span>{t.boq.shareViaWhatsApp}</span>
+                </button>
+
                 <a
                   href={BUSINESS_INFO.phoneTel}
                   className="bg-[#f97316] hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl text-sm flex items-center gap-2 shadow-md shadow-orange-500/20"

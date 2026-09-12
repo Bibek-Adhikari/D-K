@@ -216,6 +216,8 @@ export const translations = {
       thankYou: 'Thank you',
       thankYouDesc: 'Our staff at Kailash Chowk is reviewing your list and will contact you promptly.',
       callStoreFast: 'Call Store to Fast-Track',
+      shareViaWhatsApp: 'Share via WhatsApp',
+      shareWhatsAppPrompt: 'Send your BOQ shopping list directly via WhatsApp for instant processing',
       copyDetails: 'Copy Quote Details',
       copied: 'Copied to Clipboard',
       submitAnother: 'Submit Another BOQ'
@@ -365,6 +367,8 @@ export const translations = {
       thankYou: 'धन्यवाद',
       thankYouDesc: 'कैलाश चोकस्थित हाम्रो स्टाफले तपाईंको सूची हेरेर तुरुन्तै सम्पर्क गर्नेछ।',
       callStoreFast: 'छिटो सम्पर्कको लागि फोन गर्नुहोस्',
+      shareViaWhatsApp: 'WhatsApp मार्फत पठाउनुहोस्',
+      shareWhatsAppPrompt: 'तुरुन्त प्रतिक्रियाको लागि आफ्नो BOQ सूची सिधै WhatsApp मा पठाउनुहोस्',
       copyDetails: 'विवरण प्रतिलिपि गर्नुहोस्',
       copied: 'कपि गरियो',
       submitAnother: 'अर्को BOQ पठाउनुहोस्'

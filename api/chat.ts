@@ -1,48 +1,6 @@
-import express from 'express';
-import path from 'path';
-import fs from 'fs';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenAI } from '@google/genai';
-import { createServer as createViteServer } from 'vite';
 
-// Interfaces
-interface BoqItemRecord {
-  id: string;
-  fullName: string;
-  phone: string;
-  projectType: string;
-  notes?: string;
-  itemsList: string;
-  createdAt: string;
-  status: 'New' | 'Under Review' | 'Quoted' | 'Completed';
-}
-
-const BOQ_STORAGE_FILE = path.join(process.cwd(), 'boq_records.json');
-
-// Helper to read saved BOQ quotes
-function getStoredBoqs(): BoqItemRecord[] {
-  try {
-    if (fs.existsSync(BOQ_STORAGE_FILE)) {
-      const data = fs.readFileSync(BOQ_STORAGE_FILE, 'utf-8');
-      return JSON.parse(data);
-    }
-  } catch (err) {
-    console.error('Error reading boq_records.json:', err);
-  }
-  return [];
-}
-
-// Helper to save BOQ quotes
-function saveBoqRecord(record: BoqItemRecord): void {
-  try {
-    const existing = getStoredBoqs();
-    existing.unshift(record);
-    fs.writeFileSync(BOQ_STORAGE_FILE, JSON.stringify(existing, null, 2), 'utf-8');
-  } catch (err) {
-    console.error('Error saving boq_records.json:', err);
-  }
-}
-
-// Fallback rule-based responses if Gemini API key is missing or offline
 function getFallbackStoreAnswer(prompt: string, lang: 'en' | 'ne'): string {
   const p = prompt.toLowerCase();
   const isNepali = /[\u0900-\u097F]/.test(prompt) || lang === 'ne';
@@ -65,7 +23,7 @@ function getFallbackStoreAnswer(prompt: string, lang: 'en' | 'ne'): string {
       : `Call our sales desk directly at 01-5925757 for immediate wholesale rates, stock confirmation, and site deliveries.`;
   }
 
-  if (p.includes('cpvc') || p.includes('ppr') || p.includes('pipe') || p.includes('पाइप') || p.includes('फिटिङ्स')) {
+  if (p.includes('cpvc') || p.includes('ppr') || p.includes('pipe') || p.includes('पाइप') || p.includes('फिटिङ्स') || p.includes('fitting')) {
     return isNepali
       ? `हामीसँग CPVC (SDR 11, SDR 13.5) तथा PPR तातो/चिसो पानी पाइप र सम्पूर्ण ब्रास फिटिङ्स थोक तथा खुद्रा मूल्यमा उपलब्ध छन्। १/२ इन्चदेखि २ इन्च र ठूला व्यावसायिक साइजसम्म स्टकमा छन्।`
       : `We stock complete certified CPVC (SDR 11 / SDR 13.5) and PPR pipes and brass fittings in 1/2", 3/4", 1", 1.25", 1.5", and 2" sizes with full contractor stock.`;
@@ -94,7 +52,6 @@ function getFallbackStoreAnswer(prompt: string, lang: 'en' | 'ne'): string {
     : `Welcome to D&K Hardware and Stationery (Kailash Chowk, Madhyapur Thimi). We provide hardware, pipes, sanitaryware, power tools, and office/school stationery. Reach us at 01-5925757.`;
 }
 
-// Gemini AI Client Lazy Initializer
 let genAIClient: GoogleGenAI | null = null;
 function getGenAI(): GoogleGenAI | null {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -114,48 +71,30 @@ function getGenAI(): GoogleGenAI | null {
   return genAIClient;
 }
 
-async function startServer() {
-  const app = express();
-  const PORT = 3000;
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-  // JSON Body Parser
-  app.use(express.json());
+  try {
+    const { message, lang = 'en', history = [] } = req.body || {};
 
-  // API 1: Health Check
-  app.get('/api/health', (req, res) => {
-    const apiKey = process.env.GEMINI_API_KEY;
-    const isConfigured = !!apiKey && apiKey !== 'MY_GEMINI_API_KEY';
-    res.json({
-      status: 'ok',
-      store: 'D&k Hardware and Sanitary pvt ltd',
-      location: 'Kailash Chowk, Madhyapur Thimi',
-      phone: '01-5925757',
-      geminiConfigured: isConfigured,
-    });
-  });
+    if (!message || typeof message !== 'string') {
+      return res.status(400).json({ error: 'Message is required' });
+    }
 
-  // API 2: Gemini AI Store Assistant Chat
-  app.post('/api/chat', async (req, res) => {
-    try {
-      const { message, lang = 'en', history = [] } = req.body;
+    const ai = getGenAI();
 
-      if (!message || typeof message !== 'string') {
-        return res.status(400).json({ error: 'Message is required' });
-      }
+    if (!ai) {
+      const reply = getFallbackStoreAnswer(message, lang);
+      return res.status(200).json({
+        reply,
+        source: 'store-knowledge-fallback',
+        geminiConfigured: false,
+      });
+    }
 
-      const ai = getGenAI();
-
-      if (!ai) {
-        // Fallback to local rule-based store knowledge
-        const reply = getFallbackStoreAnswer(message, lang);
-        return res.json({
-          reply,
-          source: 'store-knowledge-fallback',
-          geminiConfigured: false,
-        });
-      }
-
-      const systemInstruction = `You are the expert sales, hardware, and stationery consultant for "D&K Hardware and Stationery" (D&K Hardware, Sanitary and Stationery Pvt. Ltd.), located at Kailash Chowk, Madhyapur Thimi, Bagmati Province, Nepal (Direct Phone: 01-5925757, WhatsApp: +977-9842692437).
+    const systemInstruction = `You are the expert sales, hardware, and stationery consultant for "D&K Hardware and Stationery" (D&K Hardware, Sanitary and Stationery Pvt. Ltd.), located at Kailash Chowk, Madhyapur Thimi, Bagmati Province, Nepal (Direct Phone: 01-5925757, WhatsApp: +977-9842692437).
 
 Store Facts:
 - Business Name: D&K Hardware and Stationery
@@ -179,135 +118,39 @@ Instructions:
 - When asked about prices, provide typical Nepal market wholesale ranges and encourage calling the store at 01-5925757, messaging WhatsApp (+977-9842692437), or submitting the BOQ/quote form for the best live rates.
 - Keep answers concise, clear, and easy to read with bullet points when relevant.`;
 
-      // Incorporate recent chat history if available
-      const recentHistory = Array.isArray(history)
-        ? history.slice(-4).map((h: any) => `${h.role === 'user' ? 'Customer' : 'Store Assistant'}: ${h.content}`).join('\n')
-        : '';
+    // Incorporate recent chat history if available
+    const recentHistory = Array.isArray(history)
+      ? history.slice(-4).map((h: any) => `${h.role === 'user' ? 'Customer' : 'Store Assistant'}: ${h.content}`).join('\n')
+      : '';
 
-      const promptWithContext = recentHistory
-        ? `Previous conversation:\n${recentHistory}\n\nCustomer question: ${message}`
-        : message;
+    const promptWithContext = recentHistory
+      ? `Previous conversation:\n${recentHistory}\n\nCustomer question: ${message}`
+      : message;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: promptWithContext,
-        config: {
-          systemInstruction,
-          temperature: 0.7,
-        },
-      });
-
-      const replyText = response.text || getFallbackStoreAnswer(message, lang);
-
-      return res.json({
-        reply: replyText,
-        source: 'gemini-3.8-flash',
-        geminiConfigured: true,
-      });
-    } catch (err: any) {
-      console.error('Gemini chat error:', err?.message || err);
-      // Fallback cleanly so user experience never breaks
-      const reply = getFallbackStoreAnswer(req.body?.message || '', req.body?.lang || 'en');
-      return res.json({
-        reply,
-        source: 'store-knowledge-fallback',
-        geminiConfigured: false,
-        error: err?.message || 'Gemini call failed',
-      });
-    }
-  });
-
-  // API 3: Submit BOQ Quote Request
-  app.post('/api/boq', (req, res) => {
-    try {
-      const { fullName, phone, projectType, notes, itemsList } = req.body;
-
-      if (!fullName || !phone || !itemsList) {
-        return res.status(400).json({ error: 'Full name, phone, and items list are required.' });
-      }
-
-      const inquiryId = `DK-${Math.floor(100000 + Math.random() * 900000)}`;
-      const record: BoqItemRecord = {
-        id: inquiryId,
-        fullName: fullName.trim(),
-        phone: phone.trim(),
-        projectType: projectType || 'Contractor / Construction',
-        notes: notes ? notes.trim() : '',
-        itemsList: itemsList.trim(),
-        createdAt: new Date().toISOString(),
-        status: 'New',
-      };
-
-      saveBoqRecord(record);
-
-      return res.json({
-        success: true,
-        inquiryId,
-        message: 'BOQ quote inquiry successfully submitted and registered.',
-        record,
-      });
-    } catch (err: any) {
-      console.error('Error processing BOQ quote:', err);
-      return res.status(500).json({ error: 'Failed to process BOQ quote.' });
-    }
-  });
-
-  // API 4: Get All Submitted BOQs (Store Inquiry Ledger)
-  app.get('/api/boq', (req, res) => {
-    try {
-      const quotes = getStoredBoqs();
-      return res.json({ quotes });
-    } catch (err) {
-      return res.status(500).json({ error: 'Failed to fetch BOQ quotes.' });
-    }
-  });
-
-  // SEO & AI Discoverability Files (Direct Endpoints)
-  app.get('/robots.txt', (req, res) => {
-    const robotsPath = path.join(process.cwd(), 'public', 'robots.txt');
-    if (fs.existsSync(robotsPath)) {
-      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-      return res.sendFile(robotsPath);
-    }
-    return res.status(404).send('User-agent: *\nAllow: /');
-  });
-
-  app.get('/sitemap.xml', (req, res) => {
-    const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
-    if (fs.existsSync(sitemapPath)) {
-      res.setHeader('Content-Type', 'application/xml; charset=utf-8');
-      return res.sendFile(sitemapPath);
-    }
-    return res.status(404).send('<?xml version="1.0" encoding="UTF-8"?><urlset></urlset>');
-  });
-
-  app.get('/llms.txt', (req, res) => {
-    const llmsPath = path.join(process.cwd(), 'public', 'llms.txt');
-    if (fs.existsSync(llmsPath)) {
-      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-      return res.sendFile(llmsPath);
-    }
-    return res.status(404).send('# D&K Hardware and Stationery, Kailash Chowk, Madhyapur Thimi, Nepal');
-  });
-
-  // Vite middleware for development
-  if (process.env.NODE_ENV !== 'production') {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: 'spa',
+    const response = await ai.models.generateContent({
+      model: 'gemini-3.8-flash',
+      contents: promptWithContext,
+      config: {
+        systemInstruction,
+        temperature: 0.7,
+      },
     });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+
+    const replyText = response.text || getFallbackStoreAnswer(message, lang);
+
+    return res.status(200).json({
+      reply: replyText,
+      source: 'gemini-3.8-flash',
+      geminiConfigured: true,
+    });
+  } catch (err: any) {
+    console.error('Gemini chat error in Vercel function:', err?.message || err);
+    const reply = getFallbackStoreAnswer(req.body?.message || '', req.body?.lang || 'en');
+    return res.status(200).json({
+      reply,
+      source: 'store-knowledge-fallback',
+      geminiConfigured: false,
+      error: err?.message || 'Gemini call failed',
     });
   }
-
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`D&k Hardware & Sanitary server running on http://localhost:${PORT}`);
-  });
 }
-
-startServer();

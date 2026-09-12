@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, X, Bot, User, Phone, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { Send, X, Bot, User, Phone, Sparkles, Volume2, VolumeX, CheckCircle2 } from 'lucide-react';
 import { translations } from '../constants/translations';
-import { askGeminiStoreAssistant, ChatMessage } from '../services/storeAssistant';
+import { askGeminiStoreAssistant, checkAiHealth, ChatMessage } from '../services/storeAssistant';
 
 interface ChatBotOverlayProps {
   isOpen: boolean;
@@ -9,15 +9,29 @@ interface ChatBotOverlayProps {
   lang: 'en' | 'ne';
 }
 
+interface EnrichedChatMessage extends ChatMessage {
+  source?: 'gemini-3.8-flash' | 'store-knowledge-fallback';
+}
+
 export const ChatBotOverlay: React.FC<ChatBotOverlayProps> = ({ isOpen, onClose, lang }) => {
   const t = translations[lang];
-  const [messages, setMessages] = useState<ChatMessage[]>([
+  const [messages, setMessages] = useState<EnrichedChatMessage[]>([
     { role: 'bot', content: t.chat.greeting }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isSpeechEnabled, setIsSpeechEnabled] = useState(false);
+  const [isGeminiActive, setIsGeminiActive] = useState<boolean | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Check backend Gemini AI connectivity on open
+  useEffect(() => {
+    if (isOpen) {
+      checkAiHealth().then((res) => {
+        setIsGeminiActive(res.geminiConfigured);
+      });
+    }
+  }, [isOpen]);
 
   // Update greeting when language switches
   useEffect(() => {
@@ -48,17 +62,23 @@ export const ChatBotOverlay: React.FC<ChatBotOverlayProps> = ({ isOpen, onClose,
     const text = (textToSend || input).trim();
     if (!text || isTyping) return;
 
-    const userMessage: ChatMessage = { role: 'user', content: text };
+    const userMessage: EnrichedChatMessage = { role: 'user', content: text };
     const nextMessages = [...messages, userMessage];
     setMessages(nextMessages);
     setInput('');
     setIsTyping(true);
 
     try {
-      const reply = await askGeminiStoreAssistant(text, lang, nextMessages);
-      setMessages((prev) => [...prev, { role: 'bot', content: reply }]);
+      const res = await askGeminiStoreAssistant(text, lang, nextMessages);
+      if (res.geminiConfigured !== undefined) {
+        setIsGeminiActive(res.geminiConfigured);
+      }
+      setMessages((prev) => [
+        ...prev,
+        { role: 'bot', content: res.reply, source: res.source }
+      ]);
       setIsTyping(false);
-      speakText(reply);
+      speakText(res.reply);
     } catch {
       setIsTyping(false);
     }
@@ -84,19 +104,34 @@ export const ChatBotOverlay: React.FC<ChatBotOverlayProps> = ({ isOpen, onClose,
       {/* Chat Window Container */}
       <div className="relative z-10 w-full sm:w-[420px] max-h-[85vh] h-[580px] bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-fade-in text-gray-900 dark:text-white">
         
-        {/* Header matching Binayak Suppliers Brand Blue */}
+        {/* Header */}
         <div className="p-4 bg-[#1e3a8a] text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center text-white shadow-md">
+            <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center text-white shadow-md relative">
               <Bot className="w-5 h-5" />
+              {isGeminiActive && (
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-[#1e3a8a] flex items-center justify-center">
+                  <span className="w-1.5 h-1.5 bg-white rounded-full"></span>
+                </span>
+              )}
             </div>
             <div>
               <div className="font-bold text-sm text-white flex items-center gap-1.5">
                 <span>{t.chat.title}</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                {isGeminiActive ? (
+                  <span className="inline-flex items-center gap-1 bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-[10px] px-1.5 py-0.5 rounded-full font-medium">
+                    <Sparkles className="w-2.5 h-2.5" /> Gemini 3.8 Live
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 bg-blue-500/30 text-blue-200 border border-blue-400/30 text-[10px] px-1.5 py-0.5 rounded-full font-medium">
+                    Smart Assistant
+                  </span>
+                )}
               </div>
               <div className="text-[11px] text-white/80">
-                {t.chat.subtitle}
+                {isGeminiActive 
+                  ? (lang === 'ne' ? 'गुगल जेमिनाई एआई सक्रिय' : 'Powered by Gemini AI')
+                  : t.chat.subtitle}
               </div>
             </div>
           </div>
@@ -144,6 +179,12 @@ export const ChatBotOverlay: React.FC<ChatBotOverlayProps> = ({ isOpen, onClose,
                 }`}
               >
                 {msg.content}
+                {msg.source === 'gemini-3.8-flash' && (
+                  <div className="mt-1.5 pt-1 border-t border-gray-100 dark:border-slate-800 flex items-center gap-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">
+                    <Sparkles className="w-2.5 h-2.5" />
+                    <span>Gemini 3.8 Flash</span>
+                  </div>
+                )}
               </div>
 
               {msg.role === 'user' && (
@@ -157,7 +198,7 @@ export const ChatBotOverlay: React.FC<ChatBotOverlayProps> = ({ isOpen, onClose,
           {isTyping && (
             <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-slate-400 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 p-2.5 rounded-2xl w-max shadow-xs">
               <span className="w-2 h-2 rounded-full bg-[#f97316] animate-ping" />
-              <span>{lang === 'ne' ? 'टाइप गर्दैछ...' : 'Searching store knowledge...'}</span>
+              <span>{lang === 'ne' ? 'टाइप गर्दैछ...' : (isGeminiActive ? 'Gemini AI generating response...' : 'Searching store knowledge...')}</span>
             </div>
           )}
 
