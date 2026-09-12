@@ -1,0 +1,260 @@
+import express from 'express';
+import path from 'path';
+import fs from 'fs';
+import { GoogleGenAI } from '@google/genai';
+import { createServer as createViteServer } from 'vite';
+
+// Interfaces
+interface BoqItemRecord {
+  id: string;
+  fullName: string;
+  phone: string;
+  projectType: string;
+  notes?: string;
+  itemsList: string;
+  createdAt: string;
+  status: 'New' | 'Under Review' | 'Quoted' | 'Completed';
+}
+
+const BOQ_STORAGE_FILE = path.join(process.cwd(), 'boq_records.json');
+
+// Helper to read saved BOQ quotes
+function getStoredBoqs(): BoqItemRecord[] {
+  try {
+    if (fs.existsSync(BOQ_STORAGE_FILE)) {
+      const data = fs.readFileSync(BOQ_STORAGE_FILE, 'utf-8');
+      return JSON.parse(data);
+    }
+  } catch (err) {
+    console.error('Error reading boq_records.json:', err);
+  }
+  return [];
+}
+
+// Helper to save BOQ quotes
+function saveBoqRecord(record: BoqItemRecord): void {
+  try {
+    const existing = getStoredBoqs();
+    existing.unshift(record);
+    fs.writeFileSync(BOQ_STORAGE_FILE, JSON.stringify(existing, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('Error saving boq_records.json:', err);
+  }
+}
+
+// Fallback rule-based responses if Gemini API key is missing or offline
+function getFallbackStoreAnswer(prompt: string, lang: 'en' | 'ne'): string {
+  const p = prompt.toLowerCase();
+  const isNepali = /[\u0900-\u097F]/.test(prompt) || lang === 'ne';
+
+  if (p.includes('time') || p.includes('hour') || p.includes('खुल्छ') || p.includes('समय') || p.includes('open') || p.includes('close')) {
+    return isNepali
+      ? `हाम्रो पसल हप्ताको सातै दिन खुल्छ:\n• सोमबार–शुक्रबार: बिहान ७:३० देखि साँझ ६:०० सम्म\n• शनिबार–आइतबार: बिहान ७:०० देखि साँझ ६:०० सम्म\nसम्पर्क फोन: ०१-५९२५७५७`
+      : `Store Opening Hours:\n• Monday–Friday: 7:30 AM – 6:00 PM\n• Saturday–Sunday: 7:00 AM – 6:00 PM (Open 7 Days)\nContact: 01-5925757`;
+  }
+
+  if (p.includes('location') || p.includes('where') || p.includes('address') || p.includes('कहाँ') || p.includes('ठेगाना') || p.includes('चोक') || p.includes('map')) {
+    return isNepali
+      ? `हाम्रो पसल कैलाश चोक, मध्यपुर थिमी, बागमती प्रदेश, ८८४००, नेपालमा अवस्थित छ।\nसवारी साधन तथा सामान लोड-अनलोड गर्ने फराकिलो सुविधा छ।\nफोन: ०१-५९२५७५७।`
+      : `Our Store Location: Kailash Chowk, Madhyapur Thimi, Bagmati Province, 88400, Nepal. Wide vehicular access for loading/unloading.\nPhone: 01-5925757.`;
+  }
+
+  if (p.includes('phone') || p.includes('call') || p.includes('number') || p.includes('सम्पर्क') || p.includes('फोन') || p.includes('नम्बर')) {
+    return isNepali
+      ? `हाम्रो सिधा सम्पर्क फोन नम्बर ०१-५९२५७५७ हो। तपाईं तुरुन्तै सामानको स्टक र थोक दररेट बुझ्न कल गर्न सक्नुहुन्छ।`
+      : `Call our sales desk directly at 01-5925757 for immediate wholesale rates, stock confirmation, and site deliveries.`;
+  }
+
+  if (p.includes('cpvc') || p.includes('ppr') || p.includes('pipe') || p.includes('पाइप') || p.includes('फिटिङ्स')) {
+    return isNepali
+      ? `हामीसँग CPVC (SDR 11, SDR 13.5) तथा PPR तातो/चिसो पानी पाइप र सम्पूर्ण ब्रास फिटिङ्स थोक तथा खुद्रा मूल्यमा उपलब्ध छन्। १/२ इन्चदेखि २ इन्च र ठूला व्यावसायिक साइजसम्म स्टकमा छन्।`
+      : `We stock complete certified CPVC (SDR 11 / SDR 13.5) and PPR pipes and brass fittings in 1/2", 3/4", 1", 1.25", 1.5", and 2" sizes with full contractor stock.`;
+  }
+
+  if (p.includes('faucet') || p.includes('tap') || p.includes('धारा') || p.includes('basin') || p.includes('बेसिन') || p.includes('sanitary') || p.includes('सेनेटरी')) {
+    return isNepali
+      ? `हामीसँग उच्च गुणस्तरका ब्रास कोर क्रोम बेसिन मिक्सर, सिरेमिक वाश बेसिन, आधुनिक कमोड, शावर सेट र सम्पूर्ण बाथरुम सेनेटरी फिटिङ्स उपलब्ध छन्।`
+      : `We offer heavy-duty solid brass chrome basin faucets, nano-glazed ceramic basins, modern commodes, and luxury bathroom sanitary fixtures.`;
+  }
+
+  if (p.includes('drill') || p.includes('tool') || p.includes('औजार') || p.includes('power')) {
+    return isNepali
+      ? `हामीसँग २० भोल्ट म्याक्स ब्रसलेस कर्डलेस ड्रिल (२ वटा ब्याट्री र चार्जर सहित), एंगल ग्राइन्डर, ह्यामर ड्रिल तथा सम्पूर्ण निर्माण औजारहरू उपलब्ध छन्।`
+      : `We stock 20V Max Brushless Cordless Drill Drivers with dual 4.0Ah batteries, rotary hammer drills, angle grinders, and building tools.`;
+  }
+
+  return isNepali
+    ? `डी एण्ड के हार्डवेयर एण्ड सेनेटरी प्रा. लि. (कैलाश चोक, मध्यपुर थिमी) मा स्वागत छ। हामीसँग सम्पूर्ण हार्डवेयर, पाइप र सेनेटरी सामानहरू उपलब्ध छन्। थप जानकारीको लागि कृपया ०१-५९२५७५७ मा फोन गर्नुहोस्।`
+    : `Welcome to D&k Hardware and Sanitary pvt ltd (Kailash Chowk, Madhyapur Thimi). We provide premium pipes, sanitaryware, and hardware. Reach us at 01-5925757.`;
+}
+
+// Gemini AI Client Lazy Initializer
+let genAIClient: GoogleGenAI | null = null;
+function getGenAI(): GoogleGenAI | null {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return null;
+  }
+  if (!genAIClient) {
+    genAIClient = new GoogleGenAI({
+      apiKey,
+      httpOptions: {
+        headers: {
+          'User-Agent': 'aistudio-build',
+        },
+      },
+    });
+  }
+  return genAIClient;
+}
+
+async function startServer() {
+  const app = express();
+  const PORT = 3000;
+
+  // JSON Body Parser
+  app.use(express.json());
+
+  // API 1: Health Check
+  app.get('/api/health', (req, res) => {
+    res.json({
+      status: 'ok',
+      store: 'D&k Hardware and Sanitary pvt ltd',
+      location: 'Kailash Chowk, Madhyapur Thimi',
+      phone: '01-5925757',
+      geminiConfigured: !!process.env.GEMINI_API_KEY,
+    });
+  });
+
+  // API 2: Gemini AI Store Assistant Chat
+  app.post('/api/chat', async (req, res) => {
+    try {
+      const { message, lang = 'en', history = [] } = req.body;
+
+      if (!message || typeof message !== 'string') {
+        return res.status(400).json({ error: 'Message is required' });
+      }
+
+      const ai = getGenAI();
+
+      if (!ai) {
+        // Fallback to local rule-based store knowledge
+        const reply = getFallbackStoreAnswer(message, lang);
+        return res.json({
+          reply,
+          source: 'store-knowledge-fallback',
+        });
+      }
+
+      const systemInstruction = `You are the expert sales and technical hardware consultant for "D&k Hardware and Sanitary pvt ltd", located at Kailash Chowk, Madhyapur Thimi, Bagmati Province, Nepal (Direct Phone: 01-5925757).
+
+Store Facts:
+- Business Name: D&k Hardware and Sanitary pvt ltd
+- Address: Kailash Chowk, Madhyapur Thimi, Bagmati Province, 88400, Nepal.
+- Phone: 01-5925757 (Direct shop landline for quotes and orders).
+- Hours: Monday–Friday 7:30 AM – 6:00 PM; Saturday–Sunday 7:00 AM – 6:00 PM (Open 7 Days a week).
+- Product Categories:
+  1. Plumbing & Piping: CPVC Pipes & Fittings (Class 1, SDR 11, SDR 13.5), PPR Hot/Cold Water Pipes (PN 16, PN 20), HDPE Pipes, Brass valves, ball valves, brass fittings, solvents.
+  2. Sanitaryware & Bath: Chrome basin faucets, luxury ceramic wash basins, wall-mount shower mixer sets, commodes, bathroom accessories, drains.
+  3. Power Tools & Machinery: 20V Max Brushless Cordless Drills (dual 4.0Ah batteries), Angle Grinders, Rotary Hammer Drills, impact drivers.
+  4. Building Hardware: Fasteners, anchor bolts, screws, construction adhesives, locks, door fittings.
+- Services: Bulk wholesale discounts for building contractors and plumbers, prompt site delivery across Madhyapur Thimi, Bhaktapur, Sallaghari, Koteshwor, and Kathmandu Valley, BOQ quotation estimates.
+
+Instructions:
+- Provide friendly, highly accurate, and technically sound advice in the user's language (Nepali if asked in Nepali or Devanagari, English if asked in English).
+- When asked about plumbing differences (e.g. CPVC vs PPR, SDR 11 vs SDR 13.5), explain clearly with practical plumber-tested advice.
+- When asked about prices, provide typical Nepal market wholesale ranges and encourage calling the store at 01-5925757 or submitting the BOQ form for the best live contractor rates.
+- Keep answers concise, clear, and easy to read with bullet points when relevant.`;
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.8-flash',
+        contents: message,
+        config: {
+          systemInstruction,
+          temperature: 0.7,
+        },
+      });
+
+      const replyText = response.text || getFallbackStoreAnswer(message, lang);
+
+      return res.json({
+        reply: replyText,
+        source: 'gemini-3.8-flash',
+      });
+    } catch (err: any) {
+      console.error('Gemini chat error:', err?.message || err);
+      // Fallback cleanly so user experience never breaks
+      const reply = getFallbackStoreAnswer(req.body?.message || '', req.body?.lang || 'en');
+      return res.json({
+        reply,
+        source: 'store-knowledge-fallback',
+      });
+    }
+  });
+
+  // API 3: Submit BOQ Quote Request
+  app.post('/api/boq', (req, res) => {
+    try {
+      const { fullName, phone, projectType, notes, itemsList } = req.body;
+
+      if (!fullName || !phone || !itemsList) {
+        return res.status(400).json({ error: 'Full name, phone, and items list are required.' });
+      }
+
+      const inquiryId = `DK-${Math.floor(100000 + Math.random() * 900000)}`;
+      const record: BoqItemRecord = {
+        id: inquiryId,
+        fullName: fullName.trim(),
+        phone: phone.trim(),
+        projectType: projectType || 'Contractor / Construction',
+        notes: notes ? notes.trim() : '',
+        itemsList: itemsList.trim(),
+        createdAt: new Date().toISOString(),
+        status: 'New',
+      };
+
+      saveBoqRecord(record);
+
+      return res.json({
+        success: true,
+        inquiryId,
+        message: 'BOQ quote inquiry successfully submitted and registered.',
+        record,
+      });
+    } catch (err: any) {
+      console.error('Error processing BOQ quote:', err);
+      return res.status(500).json({ error: 'Failed to process BOQ quote.' });
+    }
+  });
+
+  // API 4: Get All Submitted BOQs (Store Inquiry Ledger)
+  app.get('/api/boq', (req, res) => {
+    try {
+      const quotes = getStoredBoqs();
+      return res.json({ quotes });
+    } catch (err) {
+      return res.status(500).json({ error: 'Failed to fetch BOQ quotes.' });
+    }
+  });
+
+  // Vite middleware for development
+  if (process.env.NODE_ENV !== 'production') {
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'spa',
+    });
+    app.use(vite.middlewares);
+  } else {
+    const distPath = path.join(process.cwd(), 'dist');
+    app.use(express.static(distPath));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+  }
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`D&k Hardware & Sanitary server running on http://localhost:${PORT}`);
+  });
+}
+
+startServer();
