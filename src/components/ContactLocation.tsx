@@ -81,6 +81,18 @@ export const ContactLocation: React.FC<ContactLocationProps> = ({ lang }) => {
                     </p>
                   </div>
                 </div>
+
+                {/* Instant QR Payment Support Notice */}
+                <div className="flex items-center gap-2.5 pt-1 text-xs text-white/90">
+                  <span className="bg-orange-500/20 text-orange-300 border border-orange-400/30 px-2.5 py-1 rounded-lg font-bold text-[11px] tracking-wide">
+                    QR Pay
+                  </span>
+                  <span>
+                    {lang === 'ne'
+                      ? 'Fonepay, eSewa तथा ३०+ मोबाइल बैंकिङबाट तत्काल काउन्टर भुक्तानी स्वीकृत।'
+                      : 'Instant counter & delivery payments accepted via Fonepay, eSewa & Mobile Banking.'}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -107,24 +119,56 @@ export const ContactLocation: React.FC<ContactLocationProps> = ({ lang }) => {
 
           </div>
 
-          {/* Right Column: Google Maps Interactive Embed */}
-          <div className="md:w-1/2 bg-gray-100 dark:bg-slate-800 min-h-[440px] relative">
-            <iframe
-              title="D&k Hardware and Sanitary Location Kailash Chowk Madhyapur Thimi"
-              src="https://maps.google.com/maps?q=27.6787,85.3789&z=16&output=embed"
-              className="w-full h-full border-0 absolute inset-0"
-              loading="lazy"
-              allowFullScreen
-            />
-            <a
-              href={BUSINESS_INFO.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="absolute bottom-5 right-5 bg-white dark:bg-slate-900 px-4 py-2.5 rounded-xl shadow-xl text-xs sm:text-sm font-bold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors z-10 flex items-center gap-1.5"
-            >
-              <MapPin size={14} className="text-[#f97316]" />
-              <span>{lang === 'ne' ? 'Google Maps मा खोल्नुहोस् →' : 'View on Google Maps →'}</span>
-            </a>
+          {/* Right Column: Google Maps Interactive Embed & Showroom Visual Guide */}
+          <div className="md:w-1/2 flex flex-col bg-gray-100 dark:bg-slate-800 rounded-b-3xl md:rounded-r-3xl md:rounded-bl-none overflow-hidden">
+            <div className="min-h-[360px] relative flex-1">
+              <iframe
+                title="D&k Hardware and Sanitary Location Kailash Chowk Madhyapur Thimi"
+                src="https://maps.google.com/maps?q=27.6787,85.3789&z=16&output=embed"
+                className="w-full h-full border-0 absolute inset-0"
+                loading="lazy"
+                allowFullScreen
+              />
+              <a
+                href={BUSINESS_INFO.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 right-4 bg-white dark:bg-slate-900 px-4 py-2 rounded-xl shadow-xl text-xs sm:text-sm font-bold text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors z-10 flex items-center gap-1.5"
+              >
+                <MapPin size={14} className="text-[#f97316]" />
+                <span>{lang === 'ne' ? 'Google Maps मा खोल्नुहोस् →' : 'View on Google Maps →'}</span>
+              </a>
+            </div>
+
+            {/* Showroom Photo Guide Bar */}
+            <div className="p-4 bg-slate-900 text-white border-t border-slate-800 flex items-center justify-between gap-3">
+              <div className="text-xs">
+                <span className="font-bold text-orange-400 uppercase tracking-wider block text-[10px]">
+                  {lang === 'ne' ? 'शोरुम चिनारी' : 'Showroom Landmark'}
+                </span>
+                <span className="text-slate-300 font-medium text-[11px]">
+                  {lang === 'ne' ? 'कैलाश चोकमा ईउसेट र प्यारीवेयर डिस्प्ले हेर्नुहोस्' : 'Look for the Eauset & Parryware display at Kailash Chowk'}
+                </span>
+              </div>
+              <div className="flex gap-2 flex-shrink-0">
+                <div className="w-12 h-10 rounded-lg overflow-hidden border border-white/20 shadow-xs" title="Showroom Aisle">
+                  <img
+                    src="/assets/showroom_aisle.jpg"
+                    alt="D&K Showroom Aisle"
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <div className="w-12 h-10 rounded-lg overflow-hidden border border-white/20 shadow-xs" title="Eauset Bath Fittings Display">
+                  <img
+                    src="/assets/eauset_display.jpg"
+                    alt="Eauset Bath Display"
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
         </div>

@@ -83,9 +83,15 @@ function getFallbackStoreAnswer(prompt: string, lang: 'en' | 'ne'): string {
       : `We stock 20V Max Brushless Cordless Drill Drivers with dual 4.0Ah batteries, rotary hammer drills, angle grinders, and building tools.`;
   }
 
+  if (p.includes('paper') || p.includes('stationery') || p.includes('स्टेसनरी') || p.includes('कापी') || p.includes('रजिस्टर') || p.includes('a4') || p.includes('पेन') || p.includes('pen') || p.includes('school') || p.includes('office')) {
+    return isNepali
+      ? `हामीसँग प्रिमियम ७५/८० GSM A4 फोटोकपी पेपर (JK, Paperline), खाता वही रजिस्टर, विद्यार्थी स्पाइरल कापी, फाइल, जेल/बलपेन तथा सम्पूर्ण विद्यालय र कार्यालय स्टेसनरी थोक मूल्यमा उपलब्ध छन्।`
+      : `We stock premium 75/80 GSM A4 copier paper reams (JK Copier, Paperline), hardbound accounting registers, spiral notebooks, box files, and stationery supplies for schools, colleges, and offices at wholesale rates.`;
+  }
+
   return isNepali
-    ? `डी एण्ड के हार्डवेयर एण्ड सेनेटरी प्रा. लि. (कैलाश चोक, मध्यपुर थिमी) मा स्वागत छ। हामीसँग सम्पूर्ण हार्डवेयर, पाइप र सेनेटरी सामानहरू उपलब्ध छन्। थप जानकारीको लागि कृपया ०१-५९२५७५७ मा फोन गर्नुहोस्।`
-    : `Welcome to D&k Hardware and Sanitary pvt ltd (Kailash Chowk, Madhyapur Thimi). We provide premium pipes, sanitaryware, and hardware. Reach us at 01-5925757.`;
+    ? `डी एण्ड के हार्डवेयर तथा स्टेसनरी प्रा. लि. (कैलाश चोक, मध्यपुर थिमी) मा स्वागत छ। हामीसँग सम्पूर्ण हार्डवेयर, पाइप, सेनेटरी तथा स्टेसनरी सामानहरू उपलब्ध छन्। थप जानकारीको लागि कृपया ०१-५९२५७५७ मा फोन गर्नुहोस्।`
+    : `Welcome to D&K Hardware and Stationery (Kailash Chowk, Madhyapur Thimi). We provide hardware, pipes, sanitaryware, power tools, and office/school stationery. Reach us at 01-5925757.`;
 }
 
 // Gemini AI Client Lazy Initializer
@@ -146,24 +152,28 @@ async function startServer() {
         });
       }
 
-      const systemInstruction = `You are the expert sales and technical hardware consultant for "D&k Hardware and Sanitary pvt ltd", located at Kailash Chowk, Madhyapur Thimi, Bagmati Province, Nepal (Direct Phone: 01-5925757).
+      const systemInstruction = `You are the expert sales, hardware, and stationery consultant for "D&K Hardware and Stationery" (D&K Hardware, Sanitary and Stationery Pvt. Ltd.), located at Kailash Chowk, Madhyapur Thimi, Bagmati Province, Nepal (Direct Phone: 01-5925757, WhatsApp: +977-9842692437).
 
 Store Facts:
-- Business Name: D&k Hardware and Sanitary pvt ltd
+- Business Name: D&K Hardware and Stationery
 - Address: Kailash Chowk, Madhyapur Thimi, Bagmati Province, 88400, Nepal.
 - Phone: 01-5925757 (Direct shop landline for quotes and orders).
 - Hours: Monday–Friday 7:30 AM – 6:00 PM; Saturday–Sunday 7:00 AM – 6:00 PM (Open 7 Days a week).
-- Product Categories:
+- Departments & Products:
   1. Plumbing & Piping: CPVC Pipes & Fittings (Class 1, SDR 11, SDR 13.5), PPR Hot/Cold Water Pipes (PN 16, PN 20), HDPE Pipes, Brass valves, ball valves, brass fittings, solvents.
   2. Sanitaryware & Bath: Chrome basin faucets, luxury ceramic wash basins, wall-mount shower mixer sets, commodes, bathroom accessories, drains.
-  3. Power Tools & Machinery: 20V Max Brushless Cordless Drills (dual 4.0Ah batteries), Angle Grinders, Rotary Hammer Drills, impact drivers.
-  4. Building Hardware: Fasteners, anchor bolts, screws, construction adhesives, locks, door fittings.
-- Services: Bulk wholesale discounts for building contractors and plumbers, prompt site delivery across Madhyapur Thimi, Bhaktapur, Sallaghari, Koteshwor, and Kathmandu Valley, BOQ quotation estimates.
+  3. Power Tools & Machinery: 20V Max Brushless Cordless Drills (dual 4.0Ah batteries), Angle Grinders, Rotary Hammer Drills, impact drivers, bits, and blades.
+  4. Building Hardware: Fasteners, high-tensile anchor bolts, screws, construction adhesives, locks, door fittings.
+  5. Stationery & Paper: 75/80 GSM A4 photocopy paper (JK Copier, Paperline), hardbound accounting ledgers, visitor registers, student spiral notebooks, subject copies.
+  6. Office & School Supplies: Lever arch box files, Kangaro staplers and punch machines, gel/ballpoint pens, geometry boxes, art & drawing materials.
+  7. Electrical & Paints: Modular switches, LED panel lights, acrylic emulsion paints, primers, and Dr. Fixit waterproofing.
+- Services: Bulk wholesale discounts for building contractors, schools, and offices, prompt site delivery across Madhyapur Thimi, Bhaktapur, Sallaghari, Koteshwor, and Kathmandu Valley, BOQ quotation estimates within 2 hours.
 
 Instructions:
 - Provide friendly, highly accurate, and technically sound advice in the user's language (Nepali if asked in Nepali or Devanagari, English if asked in English).
 - When asked about plumbing differences (e.g. CPVC vs PPR, SDR 11 vs SDR 13.5), explain clearly with practical plumber-tested advice.
-- When asked about prices, provide typical Nepal market wholesale ranges and encourage calling the store at 01-5925757 or submitting the BOQ form for the best live contractor rates.
+- When asked about stationery (e.g. bulk paper reams, office files, school supplies), explain options and volume discounts.
+- When asked about prices, provide typical Nepal market wholesale ranges and encourage calling the store at 01-5925757, messaging WhatsApp (+977-9842692437), or submitting the BOQ/quote form for the best live rates.
 - Keep answers concise, clear, and easy to read with bullet points when relevant.`;
 
       const response = await ai.models.generateContent({
@@ -235,6 +245,34 @@ Instructions:
     } catch (err) {
       return res.status(500).json({ error: 'Failed to fetch BOQ quotes.' });
     }
+  });
+
+  // SEO & AI Discoverability Files (Direct Endpoints)
+  app.get('/robots.txt', (req, res) => {
+    const robotsPath = path.join(process.cwd(), 'public', 'robots.txt');
+    if (fs.existsSync(robotsPath)) {
+      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+      return res.sendFile(robotsPath);
+    }
+    return res.status(404).send('User-agent: *\nAllow: /');
+  });
+
+  app.get('/sitemap.xml', (req, res) => {
+    const sitemapPath = path.join(process.cwd(), 'public', 'sitemap.xml');
+    if (fs.existsSync(sitemapPath)) {
+      res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+      return res.sendFile(sitemapPath);
+    }
+    return res.status(404).send('<?xml version="1.0" encoding="UTF-8"?><urlset></urlset>');
+  });
+
+  app.get('/llms.txt', (req, res) => {
+    const llmsPath = path.join(process.cwd(), 'public', 'llms.txt');
+    if (fs.existsSync(llmsPath)) {
+      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+      return res.sendFile(llmsPath);
+    }
+    return res.status(404).send('# D&K Hardware and Stationery, Kailash Chowk, Madhyapur Thimi, Nepal');
   });
 
   // Vite middleware for development

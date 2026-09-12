@@ -1,0 +1,35 @@
+# Robots.txt for D&K Hardware and Stationery, Nepal
+# Website: https://dkhardwarestationery.com.np
+# Location: Kailash Chowk, Madhyapur Thimi, Bagmati Province, 88400, Nepal
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# AI Crawlers & LLM Engines (Explicitly Allowed for Full Discoverability)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+# Canonical Sitemaps & Machine-Readable AI Knowledge
+Sitemap: https://dkhardwarestationery.com.np/sitemap.xml
+
+# LLM / AI Context Spec
+# See: https://dkhardwarestationery.com.np/llms.txt
