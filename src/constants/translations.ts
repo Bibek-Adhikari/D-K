@@ -141,7 +141,13 @@ export const translations = {
   en: {
     brandName: 'D&k Hardware and Sanitary pvt ltd',
     brandShort: 'D&K Hardware',
-    tagline: 'Premier Hardware, Plumbing & Sanitary Supplies in Madhyapur Thimi',
+    estd: 'ESTD. 2072 B.S. (2015 A.D.)',
+    tagline: 'A Decade of Experience, and Trust.',
+    heroDesc: 'Your reliable partner providing quality construction materials in Madhyapur Thimi, Bhaktapur for the past 10 years.',
+    ourProducts: 'Our Services',
+    yearsTrust: 'Years of Trust',
+    happyClients: 'Happy Clients',
+    qualityCheck: 'Quality Check',
     locationShort: 'Kailash Chowk, Madhyapur Thimi, Nepal',
     locationFull: 'Kailash Chowk, Madhyapur Thimi, Bagmati Province, 88400, Nepal',
     phone: '01-5925757',
@@ -277,13 +283,20 @@ export const translations = {
       boq: 'BOQ Quote',
       commitment: 'Commitment',
       location: 'Location & Hours',
+      contact: 'Contact',
       callCta: 'Call Now: 01-5925757'
     }
   },
   ne: {
     brandName: 'डी एण्ड के हार्डवेयर एण्ड सेनेटरी प्रा. लि.',
     brandShort: 'डी एण्ड के हार्डवेयर',
-    tagline: 'मध्यपुर थिमीमा उच्च गुणस्तरीय हार्डवेयर, प्लम्बिङ र सेनेटरी सामग्रीको भरपर्दो केन्द्र',
+    estd: 'स्थापना २०७२ वि.सं. (२०१५ ई.सं.)',
+    tagline: 'एक दशकको अनुभव, र विश्वास।',
+    heroDesc: 'विगत १० वर्षदेखि मध्यपुर थिमी, भक्तपुरमा गुणस्तरीय निर्माण सामग्री उपलब्ध गराउँदै आएको तपाईंको भरपर्दो साझेदार।',
+    ourProducts: 'हाम्रा सेवाहरू',
+    yearsTrust: 'वर्षको विश्वास',
+    happyClients: 'सन्तुष्ट ग्राहक',
+    qualityCheck: 'गुणस्तर जाँच',
     locationShort: 'कैलाश चोक, मध्यपुर थिमी, नेपाल',
     locationFull: 'कैलाश चोक, मध्यपुर थिमी, बागमती प्रदेश, ८८४००, नेपाल',
     phone: '०१-५९२५७५७',
@@ -419,6 +432,7 @@ export const translations = {
       boq: 'BOQ कोटेसन',
       commitment: 'प्रतिबद्धता',
       location: 'लोकेसन र समय',
+      contact: 'सम्पर्क',
       callCta: 'कल गर्नुहोस्: ०१-५९२५७५७'
     }
   }

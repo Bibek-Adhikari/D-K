@@ -1,133 +1,134 @@
 import React from 'react';
-import { ArrowRight, Phone, Clock, MapPin, CheckCircle2 } from 'lucide-react';
-import { BUSINESS_INFO } from '../data/products';
 import { translations } from '../constants/translations';
+import HeroStats from './HeroStats';
 
 interface HeroProps {
-  onRequestQuote: () => void;
-  onViewProducts: () => void;
-  onViewLocation: () => void;
-  onOpenChat: () => void;
-  lang: 'en' | 'ne';
+  lang?: 'en' | 'ne';
+  onRequestQuote?: () => void;
+  onViewProducts?: () => void;
+  onViewLocation?: () => void;
+  onOpenChat?: () => void;
 }
 
+// Static Hero content - clean high-contrast typography
+const HeroContent: React.FC<{
+  lang: 'en' | 'ne';
+  onViewProducts?: () => void;
+  onViewLocation?: () => void;
+}> = ({ lang, onViewProducts, onViewLocation }) => {
+  const t = translations[lang];
+
+  return (
+    <>
+      <span className="inline-block bg-brand-orange text-white px-4 py-1.5 rounded-full text-sm font-bold mb-6 tracking-wide shadow-lg shadow-orange-500/20">
+        {t.estd}
+      </span>
+      <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-[1.1]">
+        {t.tagline.split(', ').map((part, i) => (
+          <React.Fragment key={i}>
+            {i === 1 ? <span className="text-brand-orange">{part}</span> : part}
+            {i === 0 && <br className="hidden md:block" />}
+          </React.Fragment>
+        ))}
+      </h1>
+      <p className="text-xl text-white/90 mb-10 leading-relaxed max-w-xl font-medium">
+        {t.heroDesc}
+      </p>
+
+      <div className="flex flex-col sm:flex-row gap-4">
+        <button
+          onClick={onViewProducts}
+          className="bg-brand-orange hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all transform hover:scale-105 shadow-xl shadow-orange-500/30 active:scale-95 cursor-pointer"
+          aria-label="View our products and services"
+        >
+          {t.ourProducts}{' '}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </button>
+        <button
+          onClick={onViewLocation}
+          className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
+          aria-label="Contact Store"
+        >
+          {t.nav.contact}
+        </button>
+      </div>
+    </>
+  );
+};
+
 export const Hero: React.FC<HeroProps> = ({
-  onRequestQuote,
+  lang = 'en',
   onViewProducts,
   onViewLocation,
-  lang,
 }) => {
   const t = translations[lang];
 
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-28 pb-16 overflow-hidden">
-      {/* Background Image with Dark Blue / Slate Overlay */}
-      <img
-        src="https://images.unsplash.com/photo-1541888946425-d0fbb1861564?auto=format&fit=crop&w=1920&q=80"
-        alt="D&K Hardware Store Warehouse"
-        className="object-cover w-full h-full absolute inset-0 -z-20"
-      />
-      
-      {/* Deep brand gradient overlay (no text gradient, just rich background contrast) */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1e3a8a]/95 via-[#1e3a8a]/85 to-slate-950/90 dark:from-slate-950/95 dark:via-slate-950/90 dark:to-blue-950/90 -z-10" />
+    <section
+      id="home"
+      className="relative min-h-[100svh] flex items-start md:items-center pt-28 md:pt-20 overflow-hidden"
+    >
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/01image.webp"
+          onError={(e) => {
+            // High-resolution authentic hardware and plumbing store warehouse
+            (e.currentTarget as HTMLImageElement).src =
+              'https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=1920&q=80';
+          }}
+          alt="D&k Hardware Store Kailash Chowk Madhyapur Thimi Nepal"
+          className="object-cover w-full h-full"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/90 to-brand-blue/40 dark:from-slate-950/90 dark:to-slate-950/40" />
+      </div>
 
-      <div className="container mx-auto px-4 z-10">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl">
-          
-          {/* Established Location Badge */}
-          <div className="inline-flex items-center gap-2 bg-[#f97316] text-white px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold mb-6 tracking-wide shadow-lg shadow-orange-500/25">
-            <MapPin size={14} />
-            <span>
-              {lang === 'ne'
-                ? 'कैलाश चोक, मध्यपुर थिमी • आधिकारिक हार्डवेयर डिलर'
-                : 'KAILASH CHOWK, MADHYAPUR THIMI • AUTHENTIC HARDWARE'}
-            </span>
+          {/* Static content for SEO and instant render */}
+          <div className="motion-div" style={{ opacity: 1, transform: 'translateY(0)' }}>
+            <HeroContent
+              lang={lang}
+              onViewProducts={onViewProducts}
+              onViewLocation={onViewLocation}
+            />
           </div>
 
-          {/* Main Title - ZERO text gradients, bold, clean, pure typography */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white mb-6 leading-[1.12] tracking-tight">
-            D&k Hardware & Sanitary <span className="text-[#f97316]">pvt ltd</span>
-          </h1>
-
-          {/* Clean Description */}
-          <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed max-w-2xl font-normal">
-            {lang === 'ne'
-              ? 'सीपीभीसी र पीपीआर प्लम्बिङ पाइप, आधुनिक सेनेटरीवेयर, पावर टुल्स र सम्पूर्ण निर्माण सामग्रीको आधिकारिक थोक तथा खुद्रा बिक्रेता।'
-              : 'Your premier destination for certified CPVC/PPR plumbing pipes, luxury sanitaryware, high-performance power tools, and building materials at genuine wholesale pricing.'}
-          </p>
-
-          {/* Key Trust Highlights */}
-          <div className="flex flex-wrap gap-4 mb-10 text-white/90 text-sm font-medium">
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-[#f97316]" />
-              <span>{lang === 'ne' ? '१००% प्रमाणित ब्रान्डहरू' : '100% Certified Brands'}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-[#f97316]" />
-              <span>{lang === 'ne' ? 'थोक तथा खुद्रा दर' : 'Contractor Wholesale Rates'}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-[#f97316]" />
-              <span>{lang === 'ne' ? 'हप्ताको ७ दिन खुला' : 'Open 7 Days a Week'}</span>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap gap-4">
-            {/* Primary Orange Button */}
-            <button
-              onClick={onRequestQuote}
-              className="bg-[#f97316] hover:bg-orange-600 active:bg-orange-700 text-white px-7 py-4 rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 transition-all transform hover:scale-105 shadow-xl shadow-orange-500/30 active:scale-95 cursor-pointer"
-            >
-              <span>{t.hero.quoteBtn}</span>
-              <ArrowRight size={20} />
-            </button>
-
-            {/* Secondary Products Button */}
-            <button
-              onClick={onViewProducts}
-              className="bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/30 text-white px-7 py-4 rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
-            >
-              <span>{lang === 'ne' ? 'सामग्रीहरू हेर्नुहोस्' : 'Explore Products'}</span>
-            </button>
-
-            {/* Direct Call Button */}
-            <a
-              href={BUSINESS_INFO.phoneTel}
-              className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-6 py-4 rounded-xl font-bold text-base sm:text-lg flex items-center justify-center gap-2 transition-all active:scale-95"
-            >
-              <Phone size={18} className="text-[#f97316] fill-current" />
-              <span>01-5925757</span>
-            </a>
-          </div>
-
-          {/* 3 Bottom Stat Badges matching Binayak Suppliers */}
-          <div className="grid grid-cols-3 gap-3 md:gap-4 mt-12 md:mt-16 max-w-2xl">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/15 p-3.5 sm:p-4 rounded-2xl text-white">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-0.5">100%</div>
-              <div className="text-[10px] sm:text-xs uppercase tracking-wider font-bold opacity-80">
-                {lang === 'ne' ? 'प्रमाणित गुणस्तर' : 'Certified Quality'}
+          {/* Stats Bar */}
+          <React.Suspense
+            fallback={
+              <div className="grid grid-cols-3 gap-3 md:gap-4 mt-12 md:mt-16">
+                {[
+                  { label: t.yearsTrust, value: '10+' },
+                  { label: t.happyClients, value: '5000+' },
+                  { label: t.qualityCheck, value: '100%' },
+                ].map((stat, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white/10 backdrop-blur-sm border border-white/10 p-3 md:p-4 rounded-2xl text-white"
+                  >
+                    <div className="text-xl md:text-2xl font-bold">{stat.value}</div>
+                    <div className="text-[9px] md:text-[10px] uppercase tracking-wider font-bold opacity-80">
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-sm border border-white/15 p-3.5 sm:p-4 rounded-2xl text-white">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-0.5">7 Days</div>
-              <div className="text-[10px] sm:text-xs uppercase tracking-wider font-bold opacity-80">
-                {lang === 'ne' ? 'हप्ताको ७ दिन खुला' : 'Open Weekly'}
-              </div>
-            </div>
-
-            <div 
-              onClick={onViewLocation}
-              className="bg-white/10 backdrop-blur-sm border border-white/15 p-3.5 sm:p-4 rounded-2xl text-white cursor-pointer hover:bg-white/15 transition-colors"
-            >
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-[#f97316] mb-0.5">Thimi</div>
-              <div className="text-[10px] sm:text-xs uppercase tracking-wider font-bold opacity-80">
-                {lang === 'ne' ? 'कैलाश चोक, थिमी' : 'Kailash Chowk'}
-              </div>
-            </div>
-          </div>
-
+            }
+          >
+            <HeroStats lang={lang} />
+          </React.Suspense>
         </div>
       </div>
     </section>

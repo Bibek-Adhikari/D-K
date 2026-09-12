@@ -1,22 +1,51 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Phone, Bot, Facebook, Music2, MessageCircle, X } from 'lucide-react';
+import { 
+  MessageCircle, 
+  Phone, 
+  Facebook, 
+  MessageSquare,
+  X,
+  Bot,
+} from 'lucide-react';
 import { BUSINESS_INFO } from '../data/products';
+import { translations } from '../constants/translations';
+
+const TiktokIcon = ({ size, color, fill }: { size: number; color?: string; fill?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill={fill || color || "currentColor"}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z" />
+  </svg>
+);
+
+const SOCIAL_LINKS = {
+  whatsapp: "https://wa.me/977015925757?text=Namaste%20D%26K%20Hardware%20and%20Sanitary%2C%20I%20have%20an%20inquiry...",
+  facebook: "https://www.facebook.com",
+  tiktok: "https://www.tiktok.com",
+  phone: BUSINESS_INFO.phoneTel
+};
+
+// On desktop: compact radial arc spreading upper-left
+// Spread from 75° → 225°
+const DESKTOP_ANGLES = [75, 105, 135, 165, 195, 225];
+const DESKTOP_RADIUS = 100; // px from button center
+
+// On mobile: straight vertical column going up
+const MOBILE_STEP = 58; // px per item
+
+function degToRad(deg: number) {
+  return (deg * Math.PI) / 180;
+}
 
 interface FloatingContactMenuProps {
   onOpenChat: () => void;
-  onOpenBoq: () => void;
+  onOpenBoq?: () => void;
   lang: 'en' | 'ne';
-}
-
-interface ArcItem {
-  id: string;
-  label: string;
-  icon: React.ElementType;
-  bgClass: string;
-  x: number;
-  y: number;
-  action: () => void;
 }
 
 export const FloatingContactMenu: React.FC<FloatingContactMenuProps> = ({
@@ -24,167 +53,181 @@ export const FloatingContactMenu: React.FC<FloatingContactMenuProps> = ({
   lang,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const t = translations[lang];
 
-  const whatsappUrl = `https://wa.me/977015925757?text=${encodeURIComponent(
-    lang === 'ne'
-      ? 'नमस्ते D&K Hardware and Sanitary, मलाई सामानको जानकारी चाहिएको थियो।'
-      : 'Hello D&k Hardware and Sanitary, I would like to inquire about hardware and sanitary supplies.'
-  )}`;
-
-  // Close menu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
-  // Arc layout matching the radial curve in Binayak Suppliers screenshot
-  const arcItems: ArcItem[] = [
-    {
-      id: 'whatsapp',
-      label: 'WhatsApp',
-      icon: MessageCircle,
-      bgClass: 'bg-[#25D366] hover:bg-[#20ba59] text-white',
-      x: 14,
-      y: -108,
-      action: () => {
-        window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-      },
-    },
-    {
-      id: 'facebook',
-      label: 'Facebook',
-      icon: Facebook,
-      bgClass: 'bg-[#1877F2] hover:bg-[#166fe5] text-white',
-      x: -32,
-      y: -96,
-      action: () => {
-        window.open('https://facebook.com', '_blank', 'noopener,noreferrer');
-      },
-    },
-    {
-      id: 'ai-bot',
-      label: lang === 'ne' ? 'एआई सहायक' : 'AI Assistant',
-      icon: Bot,
-      bgClass: 'bg-[#2563eb] hover:bg-blue-700 text-white',
-      x: -66,
-      y: -64,
-      action: () => {
-        setIsOpen(false);
-        onOpenChat();
-      },
-    },
-    {
-      id: 'tiktok',
-      label: 'TikTok',
-      icon: Music2,
-      bgClass: 'bg-black hover:bg-neutral-900 text-white',
-      x: -82,
-      y: -18,
-      action: () => {
-        window.open('https://tiktok.com', '_blank', 'noopener,noreferrer');
-      },
-    },
-    {
-      id: 'phone',
-      label: lang === 'ne' ? 'सिधा फोन' : 'Call 01-5925757',
-      icon: Phone,
-      bgClass: 'bg-[#f97316] hover:bg-orange-600 text-white',
-      x: -80,
-      y: 30,
-      action: () => {
-        window.location.href = BUSINESS_INFO.phoneTel;
-      },
-    },
+  const menuItems = [
+    { id: 'whatsapp', icon: MessageCircle, color: '#25D366', href: SOCIAL_LINKS.whatsapp, label: 'WhatsApp', fillIcon: true },
+    { id: 'facebook', icon: Facebook, color: '#1877F2', href: SOCIAL_LINKS.facebook, label: 'Facebook' },
+    { id: 'bot', icon: Bot, color: '#2563EB', onClick: () => { onOpenChat(); setIsOpen(false); }, label: 'AI Chat' },
+    { id: 'tiktok', icon: TiktokIcon, color: '#010101', href: SOCIAL_LINKS.tiktok, label: 'TikTok', fillIcon: true },
+    { id: 'phone', icon: Phone, color: '#F97316', href: SOCIAL_LINKS.phone, label: lang === 'ne' ? '०१-५९२५७५७' : 'Call 01-5925757' },
   ];
 
+  // Main button size
+  const BTN = 60;
+  // Social button size
+  const ICON_BTN = isMobile ? 44 : 42;
+
   return (
-    <div
-      ref={menuRef}
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center select-none"
-    >
-      {/* Radial Fan-Out Arc Items */}
-      <AnimatePresence>
-        {isOpen &&
-          arcItems.map((item, index) => {
-            const Icon = item.icon;
+    <>
+      {/*
+        Key fix for laptop: the wrapper must NOT clip children.
+        We use overflow: visible so buttons can spread outward past the wrapper bounds.
+        The wrapper is just a positioning anchor at bottom-right.
+      */}
+      <div
+        className="fixed z-[60]"
+        style={{
+          bottom: isMobile ? 20 : 32,
+          right: isMobile ? 16 : 32,
+          width: BTN,
+          height: BTN,
+          // overflow must be visible — this is what was causing the clipping!
+          overflow: 'visible',
+        }}
+      >
+        {/* Social items — positioned absolutely relative to this wrapper */}
+        <AnimatePresence>
+          {isOpen && menuItems.map((item, index) => {
+            let tx: number;
+            let ty: number;
+
+            if (isMobile) {
+              // Straight up
+              tx = 0;
+              ty = -(MOBILE_STEP * (index + 1));
+            } else {
+              // Radial arc: spread upper-left of the button
+              const rad = degToRad(DESKTOP_ANGLES[index]);
+              tx = Math.cos(rad) * DESKTOP_RADIUS;
+              ty = -Math.sin(rad) * DESKTOP_RADIUS;
+            }
+
+            const sharedStyle: React.CSSProperties = {
+              width: ICON_BTN,
+              height: ICON_BTN,
+              backgroundColor: item.color,
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+              flexShrink: 0,
+            };
+
+            const iconEl = <item.icon size={isMobile ? 19 : 22} color="white" fill={item.fillIcon ? 'white' : 'none'} />;
+
             return (
-              <motion.button
+              <motion.div
                 key={item.id}
-                id={`floating-action-${item.id}`}
                 initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  x: item.x,
-                  y: item.y,
-                }}
-                exit={{
-                  opacity: 0,
-                  scale: 0,
-                  x: 0,
-                  y: 0,
-                }}
+                animate={{ opacity: 1, scale: 1, x: tx, y: ty }}
+                exit={{ opacity: 0, scale: 0, x: 0, y: 0 }}
                 transition={{
                   type: 'spring',
-                  stiffness: 400,
-                  damping: 25,
-                  delay: index * 0.035,
+                  stiffness: 340,
+                  damping: 24,
+                  delay: index * 0.045,
                 }}
-                onClick={() => {
-                  item.action();
+                className="group absolute"
+                style={{
+                  // Center relative to the wrapper (which is BTN × BTN)
+                  top: (BTN - ICON_BTN) / 2,
+                  left: (BTN - ICON_BTN) / 2,
+                  // overflow visible so tooltip shows
+                  overflow: 'visible',
                 }}
-                title={item.label}
-                aria-label={item.label}
-                className={`absolute w-12 h-12 rounded-full flex items-center justify-center shadow-xl cursor-pointer transition-transform hover:scale-110 active:scale-95 z-40 ${item.bgClass}`}
               >
-                <Icon className="w-5 h-5 fill-current" />
-              </motion.button>
+                {/* Tooltip */}
+                <span
+                  className="
+                    absolute pointer-events-none z-10
+                    bg-gray-900/90 text-white text-xs font-semibold px-2 py-1 rounded-lg
+                    whitespace-nowrap shadow-lg
+                    opacity-0 group-hover:opacity-100 transition-opacity duration-150
+                  "
+                  style={
+                    isMobile
+                      ? { right: '110%', top: '50%', transform: 'translateY(-50%)' }
+                      : { bottom: '110%', left: '50%', transform: 'translateX(-50%)' }
+                  }
+                >
+                  {item.label}
+                </span>
+
+                {/* The icon button */}
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={sharedStyle}
+                    aria-label={item.label}
+                    className="hover:scale-125 active:scale-95 transition-transform block cursor-pointer"
+                  >
+                    {iconEl}
+                  </a>
+                ) : (
+                  <button
+                    onClick={item.onClick}
+                    style={sharedStyle}
+                    aria-label={item.label}
+                    className="hover:scale-125 active:scale-95 transition-transform cursor-pointer"
+                  >
+                    {iconEl}
+                  </button>
+                )}
+              </motion.div>
             );
           })}
-      </AnimatePresence>
-
-      {/* Main Floating Trigger Button - Slate round button without green indicator dot */}
-      <button
-        id="floating-menu-trigger"
-        onClick={() => setIsOpen(!isOpen)}
-        className="relative w-14 h-14 rounded-full bg-[#1e293b] hover:bg-slate-700 active:bg-slate-800 text-white flex items-center justify-center shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none focus:ring-4 focus:ring-slate-500/30 z-50"
-        aria-label="Toggle contact menu"
-        title={isOpen ? 'Close menu' : 'Contact us'}
-      >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.div
-              key="close-icon"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <X className="w-6 h-6 stroke-[2.5]" />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="chat-icon"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <MessageCircle className="w-6 h-6 stroke-[2.2]" />
-            </motion.div>
-          )}
         </AnimatePresence>
-      </button>
-    </div>
+
+        {/* Main toggle button */}
+        <motion.button
+          onClick={() => setIsOpen(o => !o)}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="w-full h-full rounded-full text-white flex items-center justify-center transition-colors relative z-10 cursor-pointer"
+          style={{
+            backgroundColor: isOpen ? '#1e293b' : '#1d4ed8',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+          }}
+          aria-label="Toggle contact menu"
+        >
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <X size={28} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="open"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="relative"
+              >
+                <MessageSquare size={28} fill="currentColor" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.button>
+      </div>
+    </>
   );
 };
