@@ -270,7 +270,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g., Rajesh Shrestha"
+                    placeholder="e.g., Dipak Adhikari"
                     className="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#1e3a8a] focus:outline-none"
                   />
                 </div>
