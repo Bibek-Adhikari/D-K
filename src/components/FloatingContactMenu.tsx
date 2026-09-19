@@ -9,7 +9,6 @@ import {
   Bot,
 } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/products';
-import { translations } from '../constants/translations';
 
 const TiktokIcon = ({ size, color, fill }: { size: number; color?: string; fill?: string }) => (
   <svg 
@@ -44,7 +43,6 @@ function degToRad(deg: number) {
 
 interface FloatingContactMenuProps {
   onOpenChat: () => void;
-  onOpenBoq?: () => void;
   lang: 'en' | 'ne';
 }
 
@@ -54,7 +52,6 @@ export const FloatingContactMenu: React.FC<FloatingContactMenuProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const t = translations[lang];
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);

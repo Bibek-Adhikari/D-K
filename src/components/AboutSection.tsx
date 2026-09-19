@@ -1,14 +1,13 @@
 import React from 'react';
-import { ShieldCheck, Phone, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Phone } from 'lucide-react';
 import { translations } from '../constants/translations';
 import { BUSINESS_INFO } from '../data/products';
 
 interface AboutSectionProps {
   lang: 'en' | 'ne';
-  onOpenBoq: () => void;
 }
 
-export const AboutSection: React.FC<AboutSectionProps> = ({ lang, onOpenBoq }) => {
+export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
   const t = translations[lang];
 
   return (
@@ -72,14 +71,6 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang, onOpenBoq }) =
 
             {/* Actions */}
             <div className="flex flex-wrap items-center gap-4">
-              <button
-                onClick={onOpenBoq}
-                className="bg-[#f97316] hover:bg-orange-600 active:bg-orange-700 text-white font-bold py-3.5 px-7 rounded-xl shadow-lg shadow-orange-500/20 text-sm sm:text-base flex items-center gap-2 transition-all transform hover:scale-105 active:scale-95 cursor-pointer"
-              >
-                <span>{lang === 'ne' ? 'BOQ कोटेसन माग्नुहोस्' : 'Request Contractor BOQ'}</span>
-                <ArrowRight size={18} />
-              </button>
-
               <a
                 href={BUSINESS_INFO.phoneTel}
                 className="inline-flex items-center gap-2 text-gray-800 dark:text-slate-200 hover:text-[#f97316] font-bold text-sm sm:text-base py-3.5 px-4 transition-colors"

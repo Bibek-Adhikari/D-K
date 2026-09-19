@@ -534,10 +534,6 @@ export const QrPaymentSection: React.FC<QrPaymentSectionProps> = ({
             <h3 className="text-lg font-extrabold text-gray-900 dark:text-white">
               {activeTab === 'esewa' ? 'eSewa Merchant QR' : activeTab === 'khalti' ? 'Khalti / NepalPay' : 'Fonepay Official QR'}
             </h3>
-            <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 mb-4">
-              Kailash Chowk, Madhyapur Thimi • PAN: 609823145
-            </p>
-
             <div className="bg-white p-4 rounded-2xl border border-gray-200 dark:border-slate-800 inline-block shadow-inner">
               {renderQrSvg(activeTab === 'bank' ? 'fonepay' : activeTab, 260)}
             </div>

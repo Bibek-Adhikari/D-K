@@ -1,142 +1,3 @@
-export interface ProductItem {
-  id: string;
-  nameEn: string;
-  nameNe: string;
-  categoryEn: 'Sanitaryware' | 'Plumbing' | 'Power Tools';
-  categoryNe: 'सेनेटरीवेयर' | 'प्लम्बिङ' | 'पावर टुल्स';
-  modelSpecEn: string;
-  modelSpecNe: string;
-  descriptionEn: string;
-  descriptionNe: string;
-  imageUrl: string;
-  imageAlt: string;
-  featuresEn: string[];
-  featuresNe: string[];
-  stockStatusEn: 'In Stock' | 'Bulk Available';
-  stockStatusNe: 'स्टकमा उपलब्ध' | 'थोक अर्डर उपलब्ध';
-  badgeEn: string;
-  badgeNe: string;
-}
-
-export const PRODUCTS_DATA: ProductItem[] = [
-  {
-    id: 'chrome-basin-faucet',
-    nameEn: 'Chrome Basin Faucet',
-    nameNe: 'क्रोम बेसिन धारा (Faucet)',
-    categoryEn: 'Sanitaryware',
-    categoryNe: 'सेनेटरीवेयर',
-    modelSpecEn: 'Solid Brass Core • Multi-layer Chrome Finish',
-    modelSpecNe: 'सोलिड ब्रास कोर • बहु-तह क्रोम फिनिस',
-    descriptionEn: 'Heavy-duty single-lever bathroom faucet with ceramic disc cartridge, drip-free aerator, and corrosion-resistant mirror polish.',
-    descriptionNe: 'सेरामिक डिस्क कार्ट्रिज, ड्रिप-फ्री एरेटर र खिया-प्रतिरोधी क्रोम फिनिस भएको टिकाउ र आधुनिक बाथरुम धारा।',
-    imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Chrome Basin Faucet with polished mirror finish',
-    featuresEn: [
-      'Ceramic disc valve cartridge',
-      'High-pressure water flow aerator',
-      'Anti-tarnish electroplated chrome',
-      'Standard 1/2" plumbing connection'
-    ],
-    featuresNe: [
-      'सेरामिक डिस्क भल्भ कार्ट्रिज (लिक-प्रुफ)',
-      'पानीको उचित बहाव दिने एरेटर',
-      'चम्किलो र खिया नलाग्ने क्रोम कोटिङ',
-      'मानक १/२ इन्च प्लम्बिङ कनेक्सन'
-    ],
-    stockStatusEn: 'In Stock',
-    stockStatusNe: 'स्टकमा उपलब्ध',
-    badgeEn: 'Popular Sanitaryware',
-    badgeNe: 'लोकप्रिय सेनेटरी'
-  },
-  {
-    id: 'cpvc-ppr-pipes-fittings',
-    nameEn: 'CPVC / PPR Pipes & Fittings',
-    nameNe: 'सीपीभीसी र पीपीआर पाइप तथा फिटिङ्स',
-    categoryEn: 'Plumbing',
-    categoryNe: 'प्लम्बिङ',
-    modelSpecEn: 'Class 1 & 2 • SDR 11 & SDR 13.5 Pressure Rated',
-    modelSpecNe: 'क्लास १ र २ • SDR 11 र SDR 13.5 प्रेसर रेटेड',
-    descriptionEn: 'High-temperature, chemical-resistant hot and cold water distribution pipes and joint fittings for residential & commercial projects.',
-    descriptionNe: 'तातो तथा चिसो पानीको लागि उच्च तापक्रम र दबाब धान्न सक्ने, खिया र फोहोर नजम्ने उत्कृष्ट पाइप र फिटिङ्स।',
-    imageUrl: 'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Industrial grade CPVC and PPR plumbing pipes and fittings',
-    featuresEn: [
-      'Hot & Cold pressure resistant up to 93°C',
-      'Zero scale & algae build-up',
-      'Solvent weld & heat fusion jointing',
-      'ISI / ISO standard certified'
-    ],
-    featuresNe: [
-      '९३°C सम्म तातो र चिसो पानी प्रतिरोधी',
-      'लेउ र खिया नलाग्ने चिल्लो भित्री सतह',
-      'सल्भेन्ट वेल्ड तथा हिट फ्युजन जोड्ने प्रविधि',
-      'आईएसआई तथा आईएसओ गुणस्तर प्रमाणित'
-    ],
-    stockStatusEn: 'Bulk Available',
-    stockStatusNe: 'थोक अर्डर उपलब्ध',
-    badgeEn: 'Contractor Choice',
-    badgeNe: 'ठेकेदारहरूको रोजाइ'
-  },
-  {
-    id: 'cordless-drill-driver',
-    nameEn: 'Cordless Drill Driver',
-    nameNe: 'कर्डलेस ड्रिल ड्राइभर (२० भोल्ट)',
-    categoryEn: 'Power Tools',
-    categoryNe: 'पावर टुल्स',
-    modelSpecEn: '20V Max Lithium-Ion • Brushless Motor',
-    modelSpecNe: '२० भोल्ट म्याक्स लिथियम-आयन • ब्रसलेस मोटर',
-    descriptionEn: 'Heavy-duty 2-speed variable drill driver with 18+1 torque clutch settings, LED work-light, and fast-charging dual battery pack.',
-    descriptionNe: '१८+१ टर्क सेटिङ, एलईडी लाइट, र दुईवटा रिचार्जेबल ब्याट्री भएको व्यावसायिक निर्माण तथा फिटिङ ड्रिल।',
-    imageUrl: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Professional 20V cordless drill driver power tool',
-    featuresEn: [
-      'Brushless motor with 60Nm torque',
-      'Dual speed gear transmission (0-450 / 0-1700 RPM)',
-      '13mm heavy-duty keyless chuck',
-      '2x 4.0Ah Li-ion batteries included'
-    ],
-    featuresNe: [
-      '६०Nm टर्क सहितको शक्तिशाली ब्रसलेस मोटर',
-      'दुई गियर स्पिड ट्रान्समिसन (०-४५० / ०-१७०० RPM)',
-      '१३ मिमी हेभी-ड्युटी किलेस चक',
-      '२ वटा ४.०Ah लिथियम ब्याट्री सहित'
-    ],
-    stockStatusEn: 'In Stock',
-    stockStatusNe: 'स्टकमा उपलब्ध',
-    badgeEn: 'High Torque',
-    badgeNe: 'उच्च शक्ति'
-  },
-  {
-    id: 'ceramic-wash-basin',
-    nameEn: 'Ceramic Wash Basin',
-    nameNe: 'सेरामिक वाश बेसिन',
-    categoryEn: 'Sanitaryware',
-    categoryNe: 'सेनेटरीवेयर',
-    modelSpecEn: 'Vitreous China • Glazed Easy-Clean Surface',
-    modelSpecNe: 'भिट्रियस चाइना • न्यानो-ग्लेज्ड सजिलो सफाइ',
-    descriptionEn: 'Elegant counter-top or wall-mounted ceramic wash basin featuring deep splash-free bowl geometry and stain-resistant glaze.',
-    descriptionNe: 'दाग नबस्ने न्यानो-ग्लेज्ड सतह र छिटा नउफ्रिने गहिरो बनावट भएको आधुनिक डिजाइनको सेरामिक बेसिन।',
-    imageUrl: 'https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&w=600&q=80',
-    imageAlt: 'Luxury ceramic wash basin in modern bathroom setting',
-    featuresEn: [
-      'Nano-glazed antibacterial ceramic',
-      'Pre-punched single faucet hole',
-      'Integrated overflow prevention outlet',
-      'Scratch & chemical resistant finish'
-    ],
-    featuresNe: [
-      'न्यानो-ग्लेज्ड एन्टिब्याक्टेरियल सेरामिक',
-      'सजिलो फिटिङको लागि पूर्व-तयार धारा प्वाल',
-      'पानी बगेर नजाने ओभरफ्लो आउटलेट',
-      'कोरिन तथा केमिकल प्रतिरोधी फिनिस'
-    ],
-    stockStatusEn: 'In Stock',
-    stockStatusNe: 'स्टकमा उपलब्ध',
-    badgeEn: 'Luxury Fixture',
-    badgeNe: 'आधुनिक डिजाइन'
-  }
-];
-
 export const translations = {
   en: {
     brandName: 'D&k Hardware and Sanitary pvt ltd',
@@ -148,8 +9,6 @@ export const translations = {
     yearsTrust: 'Years of Trust',
     happyClients: 'Happy Clients',
     qualityCheck: 'Quality Check',
-    locationShort: 'Kailash Chowk, Madhyapur Thimi, Nepal',
-    locationFull: 'Kailash Chowk, Madhyapur Thimi, Bagmati Province, 88400, Nepal',
     phone: '01-5925757',
     hours: {
       weekdays: 'Monday–Friday: 7:30 AM – 6:00 PM',
@@ -162,13 +21,13 @@ export const translations = {
       title: 'D&k Hardware and Sanitary pvt ltd',
       desc: 'Your certified regional source for premium CPVC/PPR plumbing, luxury sanitaryware, professional power tools, and comprehensive building supplies. Supplying contractors, plumbers, and homeowners with authentic brands at guaranteed wholesale prices.',
       callBtn: 'Call Now: 01-5925757',
-      quoteBtn: 'Request BOQ Quote',
+      quoteBtn: 'Request Quote',
       directionsBtn: 'Kailash Chowk, Thimi',
       profileTitle: 'Store Highlights',
       openToday: 'Open Today',
       points: [
         { title: '100% Genuine & Certified', desc: 'Authorized supplier for top CPVC/PPR & sanitary brands.' },
-        { title: 'Full Contractor Support', desc: 'Instant BOQ estimates, bulk discounts & customized orders.' },
+        { title: 'Full Contractor Support', desc: 'Instant estimates, bulk discounts & customized orders.' },
         { title: 'Site Delivery Available', desc: 'Fast delivery across Madhyapur Thimi, Bhaktapur & Kathmandu.' }
       ],
       urgentMaterial: 'Need urgent material on site?'
@@ -183,45 +42,7 @@ export const translations = {
       stat4Value: 'Madhyapur',
       stat4Label: 'Thimi Kailash Chowk'
     },
-    products: {
-      badge: 'Premium Inventory & Materials',
-      title: 'Featured Products Catalog',
-      desc: 'High-performance hardware, CPVC/PPR piping systems, and luxury sanitaryware in stock. Click "Add to BOQ Quote" to build your bulk inquiry list instantly.',
-      liveBadge: 'Stock verified at Kailash Chowk branch',
-      addToBoq: 'Add to BOQ Quote',
-      added: 'Added to BOQ',
-      specs: 'View Specifications',
-      close: 'Close',
-      techHighlights: 'Technical Highlights & Features'
-    },
-    boq: {
-      badge: 'Contractors & Bulk Inquiries',
-      title: 'BOQ & Price Quotation Form',
-      desc: 'Submit your Bill of Quantities (BOQ), material specifications, or bulk order list. Our sales team at Kailash Chowk prepares custom contractor quotes with tiered discounts.',
-      fullNameLabel: 'Contractor / Client Full Name',
-      fullNamePlaceholder: 'e.g., Rajesh Shrestha / Shrestha Construction',
-      phoneLabel: 'Contact Phone Number',
-      phonePlaceholder: 'e.g., 98XXXXXXXX or 01-5925757',
-      projectTypeLabel: 'Project Type',
-      notesLabel: 'Site Location / Delivery Notes (Optional)',
-      notesPlaceholder: 'e.g., Delivery required near Lokanthali or Radhe Radhe',
-      itemsLabel: 'Material & Items List',
-      itemsPlaceholder: 'Enter required items, quantities, pipe sizes, sanitary models, or paste your BOQ list here...',
-      clear: 'Clear list',
-      quickAddTitle: 'Quick Add Common Items:',
-      submitBtn: 'Submit BOQ for Pricing',
-      submitting: 'Generating Quotation...',
-      inquiryRef: 'Inquiry Reference',
-      quoteReceived: 'Quotation Request Received!',
-      thankYou: 'Thank you',
-      thankYouDesc: 'Our staff at Kailash Chowk is reviewing your list and will contact you promptly.',
-      callStoreFast: 'Call Store to Fast-Track',
-      shareViaWhatsApp: 'Share via WhatsApp',
-      shareWhatsAppPrompt: 'Send your BOQ shopping list directly via WhatsApp for instant processing',
-      copyDetails: 'Copy Quote Details',
-      copied: 'Copied to Clipboard',
-      submitAnother: 'Submit Another BOQ'
-    },
+
     commitment: {
       badge: 'Our Quality Commitment',
       title: 'Never Compromise on Quality',
@@ -270,19 +91,18 @@ export const translations = {
       greeting: 'Namaste! Welcome to D&k Hardware and Sanitary pvt ltd. I am your store AI assistant. How can I help you with plumbing, sanitaryware, power tools, or store info at Kailash Chowk, Thimi?',
       title: 'D&K AI Store Assistant',
       subtitle: 'Kailash Chowk, Thimi • Ask in English or Nepali',
-      placeholder: 'Ask about pipes, sanitaryware, store hours, or BOQ...',
+      placeholder: 'Ask about pipes, sanitaryware, or store hours...',
       send: 'Send',
       callInstead: 'Or Call Us Directly: 01-5925757',
       quickPrompts: [
         'Do you have CPVC pipes in stock?',
         'Where are you located in Thimi?',
         'What are your store hours?',
-        'How can I submit a BOQ quotation?'
+        'How can I request a quotation?'
       ]
     },
     nav: {
       products: 'Products',
-      boq: 'BOQ Quote',
       commitment: 'Commitment',
       location: 'Location & Hours',
       contact: 'Contact',
@@ -299,8 +119,6 @@ export const translations = {
     yearsTrust: 'वर्षको विश्वास',
     happyClients: 'सन्तुष्ट ग्राहक',
     qualityCheck: 'गुणस्तर जाँच',
-    locationShort: 'कैलाश चोक, मध्यपुर थिमी, नेपाल',
-    locationFull: 'कैलाश चोक, मध्यपुर थिमी, बागमती प्रदेश, ८८४००, नेपाल',
     phone: '०१-५९२५७५७',
     hours: {
       weekdays: 'सोमबार–शुक्रबार: बिहान ७:३० – साँझ ६:००',
@@ -313,13 +131,13 @@ export const translations = {
       title: 'डी एण्ड के हार्डवेयर एण्ड सेनेटरी प्रा. लि.',
       desc: 'गुणस्तरीय सीपीभीसी र पीपीआर प्लम्बिङ पाइप, आधुनिक सेनेटरीवेयर, भरपर्दा पावर टुल्स तथा सम्पूर्ण निर्माण सामग्रीहरूको आधिकारिक केन्द्र। ठेकेदार, प्लम्बर तथा घरधनीहरूलाई उचित थोक मूल्यमा सामान उपलब्ध गराउँदै।',
       callBtn: 'सम्पर्क: ०१-५९२५७५७',
-      quoteBtn: 'BOQ कोटेसन अनुरोध',
+      quoteBtn: 'कोटेसन अनुरोध',
       directionsBtn: 'कैलाश चोक, थिमी',
       profileTitle: 'पसलको मुख्य विशेषताहरू',
       openToday: 'आज खुला छ',
       points: [
         { title: '१००% गुणस्तरीय र प्रमाणित', desc: 'उत्कृष्ट सीपीभीसी/पीपीआर तथा सेनेटरी ब्रान्डहरूको आधिकारिक बिक्रेता।' },
-        { title: 'ठेकेदारहरूलाई विशेष सुविधा', desc: 'तत्काल BOQ इस्टिमेट, विशेष छुट र सहज अर्डर व्यवस्था।' },
+        { title: 'ठेकेदारहरूलाई विशेष सुविधा', desc: 'तत्काल इस्टिमेट, विशेष छुट र सहज अर्डर व्यवस्था।' },
         { title: 'साइटमै डेलिभरी सुविधा', desc: 'मध्यपुर थिमी, भक्तपुर र काठमाडौं उपत्यकाभर छिटो डेलिभरी।' }
       ],
       urgentMaterial: 'साइटमा तत्काल सामग्री चाहियो?'
@@ -334,45 +152,7 @@ export const translations = {
       stat4Value: 'मध्यपुर',
       stat4Label: 'थिमी कैलाश चोक'
     },
-    products: {
-      badge: 'उत्कृष्ट सामान तथा सामग्रीहरू',
-      title: 'प्रमुख उत्पादनहरू (Featured Catalog)',
-      desc: 'उच्च गुणस्तरका हार्डवेयर, सीपीभीसी/पीपीआर पाइप र आधुनिक सेनेटरी सामानहरू स्टकमा उपलब्ध छन्। आफ्नो सामान छनोट गर्न "BOQ कोटेसनमा थप्नुहोस्" थिच्नुहोस्।',
-      liveBadge: 'कैलाश चोक शाखामा स्टक उपलब्ध',
-      addToBoq: 'BOQ कोटेसनमा थप्नुहोस्',
-      added: 'कोटेसनमा थपियो',
-      specs: 'विस्तृत विवरण हेर्नुहोस्',
-      close: 'बन्द गर्नुहोस्',
-      techHighlights: 'प्राविधिक विशेषताहरू'
-    },
-    boq: {
-      badge: 'ठेकेदार तथा ग्राहकहरूको लागि',
-      title: 'BOQ तथा मूल्य कोटेसन फारम',
-      desc: 'तपाईंको निर्माण सामग्रीको सूची (BOQ), आवश्यक सामान वा थोक अर्डर पठाउनुहोस्। कैलाश चोकस्थित हाम्रो टिमले विशेष छुट सहित तुरुन्तै मूल्य उपलब्ध गराउनेछ।',
-      fullNameLabel: 'ठेकेदार वा ग्राहकको पूरा नाम',
-      fullNamePlaceholder: 'उदाहरण: राजेश श्रेष्ठ / श्रेष्ठ कन्स्ट्रक्सन',
-      phoneLabel: 'सम्पर्क फोन नम्बर',
-      phonePlaceholder: 'उदाहरण: ९८XXXXXXXX वा ०१-५९२५७५७',
-      projectTypeLabel: 'परियोजनाको प्रकार',
-      notesLabel: 'साइट लोकेसन / डेलिभरी नोट (ऐच्छिक)',
-      notesPlaceholder: 'उदाहरण: लोकन्थली वा राधे-राधे नजिक साइटमा डेलिभरी चाहिने',
-      itemsLabel: 'सामग्री तथा सामानहरूको सूची (BOQ)',
-      itemsPlaceholder: 'सामानको नाम, साइज, परिमाण वा आफ्नो BOQ तालिका यहाँ लेख्नुहोस्...',
-      clear: 'सूची खाली गर्नुहोस्',
-      quickAddTitle: 'छिटो थप्न सकिने सामान्य सामानहरू:',
-      submitBtn: 'मूल्य कोटेसन पठाउनुहोस्',
-      submitting: 'कोटेसन तयार हुँदैछ...',
-      inquiryRef: 'इन्क्वायरी नम्बर',
-      quoteReceived: 'कोटेसन अनुरोध प्राप्त भयो!',
-      thankYou: 'धन्यवाद',
-      thankYouDesc: 'कैलाश चोकस्थित हाम्रो स्टाफले तपाईंको सूची हेरेर तुरुन्तै सम्पर्क गर्नेछ।',
-      callStoreFast: 'छिटो सम्पर्कको लागि फोन गर्नुहोस्',
-      shareViaWhatsApp: 'WhatsApp मार्फत पठाउनुहोस्',
-      shareWhatsAppPrompt: 'तुरुन्त प्रतिक्रियाको लागि आफ्नो BOQ सूची सिधै WhatsApp मा पठाउनुहोस्',
-      copyDetails: 'विवरण प्रतिलिपि गर्नुहोस्',
-      copied: 'कपि गरियो',
-      submitAnother: 'अर्को BOQ पठाउनुहोस्'
-    },
+
     commitment: {
       badge: 'हाम्रो प्रतिबद्धता',
       title: 'गुणस्तरमा कहिल्यै सम्झौता छैन',
@@ -421,19 +201,18 @@ export const translations = {
       greeting: 'नमस्ते! डी एण्ड के हार्डवेयर एण्ड सेनेटरी प्रा. लि. मा तपाईंलाई स्वागत छ। म यहाँको एआई सहायक हुँ। प्लम्बिङ, सेनेटरी, औजार वा कैलाश चोकस्थित पसल सम्बन्धी के जानकारी चाहिन्छ?',
       title: 'डी एण्ड के एआई सहायक',
       subtitle: 'कैलाश चोक, थिमी • नेपाली वा अङ्ग्रेजीमा सोध्नुहोस्',
-      placeholder: 'पाइप, धारा, पसल खुल्ने समय वा BOQ बारे सोध्नुहोस्...',
+      placeholder: 'पाइप, धारा वा पसल खुल्ने समयबारे सोध्नुहोस्...',
       send: 'पठाउनुहोस्',
       callInstead: 'वा सिधै फोन गर्नुहोस्: ०१-५९२५७५७',
       quickPrompts: [
         'सीपीभीसी पाइप स्टकमा छ?',
         'पसल थिमीको कुन ठाउँमा छ?',
         'पसल कति बजेसम्म खुल्छ?',
-        'BOQ कोटेसन कसरी पठाउने?'
+        'कोटेसन कसरी माग्ने?'
       ]
     },
     nav: {
       products: 'सामानहरू',
-      boq: 'BOQ कोटेसन',
       commitment: 'प्रतिबद्धता',
       location: 'लोकेसन र समय',
       contact: 'सम्पर्क',

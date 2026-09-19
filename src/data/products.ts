@@ -269,12 +269,12 @@ export const FEATURED_PRODUCTS: Product[] = [
 export const STORE_SERVICES: ServiceItem[] = [
   {
     id: 'contractor-bulk-supply',
-    title: 'Bulk Hardware & BOQ Quotation for Contractors',
-    titleNe: 'ठेकेदार तथा निर्माणकर्ताका लागि थोक हार्डवेयर तथा BOQ दररेट',
+    title: 'Bulk Hardware & Quotation for Contractors',
+    titleNe: 'ठेकेदार तथा निर्माणकर्ताका लागि थोक हार्डवेयर तथा दररेट',
     description: 'We supply complete structural hardware, CPVC/PPR piping runs, sanitary fittings, and power tools at verified wholesale contractor rates directly for job sites.',
     descriptionNe: 'निर्माण कार्यका लागि आवश्यक सम्पूर्ण पाइप, सेनेटरी, नट-बोल्ट र औजारहरू सिधै कार्यस्थलसम्म थोक मूल्यमा उपलब्ध गराउँछौं।',
     iconName: 'Building2',
-    details: ['Itemized BOQ quotation within 2 business hours', 'Volume wholesale tier pricing for site managers', 'Flexible on-demand site top-ups', 'Official VAT invoice compliance'],
+    details: ['Itemized quotation within 2 business hours', 'Volume wholesale tier pricing for site managers', 'Flexible on-demand site top-ups', 'Official VAT invoice compliance'],
     targetAudience: 'Civil Contractors, Plumbers, Electricians, Builders',
   },
   {
@@ -393,10 +393,10 @@ export const STORE_FAQS: FaqItem[] = [
   },
   {
     category: 'Hardware',
-    question: 'Do you provide Bill of Quantities (BOQ) quote estimates for construction projects?',
-    questionNe: 'के तपाईंहरू निर्माण आयोजनाका लागि BOQ दररेट कोटेसन उपलब्ध गराउनुहुन्छ?',
-    answer: 'Yes! Contractors and homeowners can submit their item lists or building BOQ directly through our online quote form, by phone at 01-5925757, or via WhatsApp at +977-9842692437. We provide prompt itemized wholesale estimates with VAT compliance.',
-    answerNe: 'अवश्य! तपाईं आफ्नो सामानको सूची वा BOQ हाम्रो वेबसाइटको फारम, फोन (०१-५९२५७५७) वा ह्वाट्सएप मार्फत पठाउन सक्नुहुन्छ। हामी तत्काल थोक मूल्यमा कोटेसन प्रदान गर्दछौं।',
+    question: 'Do you provide quote estimates for construction projects?',
+    questionNe: 'के तपाईंहरू निर्माण आयोजनाका लागि दररेट कोटेसन उपलब्ध गराउनुहुन्छ?',
+    answer: 'Yes! Contractors and homeowners can submit their item lists directly by phone at 01-5925757, or via WhatsApp at +977-9842692437. We provide prompt itemized wholesale estimates with VAT compliance.',
+    answerNe: 'अवश्य! तपाईं आफ्नो सामानको सूची फोन (०१-५९२५७५७) वा ह्वाट्सएप मार्फत पठाउन सक्नुहुन्छ। हामी तत्काल थोक मूल्यमा कोटेसन प्रदान गर्दछौं।',
   },
   {
     category: 'Hardware',

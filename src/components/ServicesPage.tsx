@@ -1,12 +1,11 @@
 import React from 'react';
-import { 
-  Building2, 
-  BookOpenCheck, 
-  Wrench, 
-  Truck, 
-  CheckCircle2, 
-  Phone, 
-  FileText, 
+import {
+  Building2,
+  BookOpenCheck,
+  Wrench,
+  Truck,
+  CheckCircle2,
+  Phone,
   MessageCircle,
   Clock,
   MapPin,
@@ -17,13 +16,11 @@ import { FaqSection } from './FaqSection';
 
 interface ServicesPageProps {
   lang: 'en' | 'ne';
-  onNavigateToBoq: () => void;
   onNavigateToContact: () => void;
 }
 
 export const ServicesPage: React.FC<ServicesPageProps> = ({
   lang,
-  onNavigateToBoq,
   onNavigateToContact,
 }) => {
   const getIcon = (iconName: string) => {
@@ -47,8 +44,8 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       title: 'Submit Your Requirement',
       titleEn: 'Submit Your Requirement',
       titleNe: 'सामग्रीको विवरण पठाउनुहोस्',
-      descEn: 'Send us your architectural BOQ, photo list, or paper carton count via our web form or WhatsApp.',
-      descNe: 'आफ्नो सामानको सूची, BOQ वा आवश्यक स्टेसनरीको परिमाण हाम्रो वेबसाइट फारम वा ह्वाट्सएपमा पठाउनुहोस्।',
+      descEn: 'Send us your material list, photo list, or paper carton count via our web form or WhatsApp.',
+      descNe: 'आफ्नो सामानको सूची वा आवश्यक स्टेसनरीको परिमाण हाम्रो वेबसाइट फारम वा ह्वाट्सएपमा पठाउनुहोस्।',
     },
     {
       step: '02',
@@ -71,23 +68,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   return (
     <div className="py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Page Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="inline-block bg-[#1e3a8a] text-white text-xs font-bold uppercase tracking-wider px-3.5 py-1 rounded-full mb-3 shadow-xs">
-            {lang === 'ne' ? 'हाम्रा सेवाहरू' : 'Commercial & Technical Services'}
-          </span>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-            {lang === 'ne'
-              ? 'निर्माणकर्ता, विद्यालय तथा कार्यालयका लागि समर्पित सेवाहरू'
-              : 'Services Built for Builders, Schools & Offices'}
-          </h1>
-          <p className="mt-3 text-base sm:text-lg text-gray-600 dark:text-slate-300">
-            {lang === 'ne'
-              ? 'हार्डवेयर र स्टेसनरी केवल पसलमा किन्ने वस्तु मात्र होइन; हामी प्राविधिक परामर्श र भरपर्दो ढुवानी समेत प्रदान गर्दछौं।'
-              : 'From complex multi-floor plumbing calculations to recurring paper deliveries, D&K delivers total supply reliability.'}
-          </p>
-        </div>
-
         {/* 4 Core Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           {STORE_SERVICES.map((service) => (
@@ -126,11 +106,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
               <div className="mt-8 pt-4 border-t border-gray-100 dark:border-slate-800 flex flex-wrap items-center gap-3">
                 <button
-                  onClick={onNavigateToBoq}
+                  onClick={onNavigateToContact}
                   className="bg-[#1e3a8a] hover:bg-blue-900 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-xs cursor-pointer"
                 >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>{lang === 'ne' ? 'कोटेसन अनुरोध' : 'Request Quotation'}</span>
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>{lang === 'ne' ? 'सम्पर्क गर्नुहोस्' : 'Contact Store'}</span>
                 </button>
                 <a
                   href={BUSINESS_INFO.whatsappUrl}

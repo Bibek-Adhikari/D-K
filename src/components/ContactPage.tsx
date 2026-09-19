@@ -13,7 +13,6 @@ import {
   QrCode
 } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/products';
-import { FaqSection } from './FaqSection';
 import { QrPaymentSection } from './QrPaymentSection';
 
 interface ContactPageProps {
@@ -104,7 +103,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                 WhatsApp
               </h3>
               <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
-                {lang === 'ne' ? 'सामानको फोटो वा सूची पठाउन' : 'Send BOQ photos or lists'}
+                {lang === 'ne' ? 'सामानको फोटो वा सूची पठाउन' : 'Send photos or lists'}
               </p>
               <div className="mt-3 font-mono font-bold text-base text-emerald-600">
                 +977-9842692437
@@ -316,7 +315,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                   >
                     <option value="Hardware & Plumbing">Hardware & Plumbing (पाइप, औजार, सेनेटरी)</option>
                     <option value="Stationery & Paper">Stationery & Paper (A4 पेपर, कापी, रजिस्टर)</option>
-                    <option value="Contractor BOQ">Contractor Bulk BOQ (निर्माण दररेट)</option>
+                    <option value="Contractor Bulk">Contractor Bulk (निर्माण दररेट)</option>
                     <option value="General Inquiry">General Store Visit (सामान्य जानकारी)</option>
                   </select>
                 </div>
@@ -351,10 +350,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
         </div>
 
         {/* Supported QR Payment Codes (Fonepay, eSewa, NepalPay, Bank Wire) */}
-        <QrPaymentSection lang={lang} className="mb-16" id="qr-payments" />
-
-        {/* General Store FAQs */}
-        <FaqSection lang={lang} categoryFilter="General" />
+        <QrPaymentSection lang={lang} className="mb-4" id="qr-payments" />
       </div>
     </div>
   );

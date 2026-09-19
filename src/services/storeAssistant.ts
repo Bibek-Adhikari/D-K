@@ -107,9 +107,9 @@ export function answerStoreInquiryLocal(prompt: string, lang: 'en' | 'ne'): stri
 
   if (p.includes('boq') || p.includes('quote') || p.includes('price') || p.includes('rate') || p.includes('कोटेसन') || p.includes('मूल्य') || p.includes('अर्डर')) {
     if (isNepaliInput) {
-      return `तपाईं हाम्रो वेबपेजको 'BOQ तथा मूल्य कोटेसन फारम' मा गएर आवश्यक सामानको सूची पठाउन सक्नुहुन्छ। वा कैलाश चोकस्थित पसलमा सिधै ०१-५९२५७५७ मा फोन गरेर तत्काल थोक छुट सहितको मूल्य बुझ्न सक्नुहुन्छ।`;
+      return `आवश्यक सामानको सूचीसहित कैलाश चोकस्थित पसलमा सिधै ०१-५९२५७५७ मा फोन गरेर तत्काल थोक छुट सहितको मूल्य बुझ्न सक्नुहुन्छ।`;
     }
-    return `You can submit your material list through our BOQ Quotation Form on this page, or call our desk at 01-5925757 to get an immediate bulk price discount for your site.`;
+    return `Call our desk at 01-5925757 with your material list to get an immediate bulk price discount for your site.`;
   }
 
   if (p.includes('delivery') || p.includes('डेलिभरी') || p.includes('गाडी') || p.includes('site')) {

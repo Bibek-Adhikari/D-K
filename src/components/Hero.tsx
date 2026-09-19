@@ -5,7 +5,6 @@ import HeroStats from './HeroStats';
 
 interface HeroProps {
   lang?: 'en' | 'ne';
-  onRequestQuote?: () => void;
   onViewProducts?: () => void;
   onViewLocation?: () => void;
   onOpenChat?: () => void;

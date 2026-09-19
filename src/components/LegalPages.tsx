@@ -42,7 +42,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, lang, onBack }) =>
                     1. Information We Collect
                   </h3>
                   <p>
-                    When you use our website, request a Bill of Quantities (BOQ) quotation, or contact us via phone or WhatsApp, we collect basic contact details such as your full name, phone number, delivery site location, and material requirements list.
+                    When you use our website or contact us via phone or WhatsApp, we collect basic contact details such as your full name, phone number, delivery site location, and material requirements list.
                   </p>
                 </section>
 
@@ -92,7 +92,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, lang, onBack }) =>
               <div className="space-y-5 text-xs sm:text-sm text-gray-600 dark:text-slate-300 leading-relaxed">
                 <section>
                   <h3 className="font-bold text-base text-gray-900 dark:text-white mb-1.5">
-                    1. Price Estimates & BOQ Quotes
+                    1. Price Estimates & Quotes
                   </h3>
                   <p>
                     Rates generated on the website or provided via phone/WhatsApp represent current market wholesale quotations. Due to fluctuations in raw copper, CPVC resin, steel, and pulp paper, quotes are generally valid for 7 calendar days unless specified otherwise.

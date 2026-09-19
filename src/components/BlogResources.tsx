@@ -1,27 +1,24 @@
 import React, { useState } from 'react';
-import { 
-  BookOpen, 
-  Clock, 
-  Tag, 
-  ArrowLeft, 
-  ArrowRight, 
-  Phone, 
-  FileText, 
-  Share2, 
-  CheckCircle2, 
-  UserCheck 
+import {
+  BookOpen,
+  Clock,
+  Tag,
+  ArrowLeft,
+  ArrowRight,
+  Phone,
+  Share2,
+  CheckCircle2,
+  UserCheck
 } from 'lucide-react';
 import { BLOG_POSTS, BUSINESS_INFO } from '../data/products';
 import { BlogPost } from '../types';
 
 interface BlogResourcesProps {
   lang: 'en' | 'ne';
-  onNavigateToBoq: () => void;
 }
 
 export const BlogResources: React.FC<BlogResourcesProps> = ({
   lang,
-  onNavigateToBoq,
 }) => {
   const [activePost, setActivePost] = useState<BlogPost | null>(null);
   const [selectedTag, setSelectedTag] = useState<string>('All');
@@ -97,17 +94,10 @@ export const BlogResources: React.FC<BlogResourcesProps> = ({
                 <p className="text-xs text-gray-600 dark:text-slate-300 mt-0.5">
                   {lang === 'ne'
                     ? 'कैलाश चोक, मध्यपुर थिमी शाखामा तत्काल स्टक प्रमाणित गरी उठाउन वा मगाउन सक्नुहुन्छ।'
-                    : 'Call 01-5925757 or request a quick BOQ estimate directly.'}
+                    : 'Call 01-5925757 for direct store assistance.'}
                 </p>
               </div>
               <div className="flex items-center gap-2.5 w-full sm:w-auto">
-                <button
-                  onClick={onNavigateToBoq}
-                  className="flex-1 sm:flex-initial bg-[#1e3a8a] text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5"
-                >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>{lang === 'ne' ? 'कोटेसन' : 'BOQ'}</span>
-                </button>
                 <a
                   href={BUSINESS_INFO.phoneTel}
                   className="flex-1 sm:flex-initial bg-[#f97316] text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5"

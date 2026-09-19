@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Globe, Sun, Moon, Menu, X, ShieldCheck } from 'lucide-react';
+import { Phone, Globe, Sun, Moon, Menu, X } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/products';
-import { translations } from '../constants/translations';
-import { ActiveView } from '../types';
 
 interface HeaderProps {
-  activeView: ActiveView;
-  onNavigate: (view: ActiveView) => void;
+  activeSection: string;
+  onNavigate: (sectionId: string) => void;
   lang: 'en' | 'ne';
   onToggleLang: () => void;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
   onOpenChat?: () => void;
-  onOpenBoq?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  activeView,
+  activeSection,
   onNavigate,
   lang,
   onToggleLang,
@@ -25,7 +22,6 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const t = translations[lang];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,19 +31,18 @@ export const Header: React.FC<HeaderProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems: { label: string; view: ActiveView }[] = [
-    { label: lang === 'ne' ? 'गृहपृष्ठ' : 'Home', view: 'home' },
-    { label: lang === 'ne' ? 'उत्पादनहरू' : 'Products', view: 'products' },
-    { label: lang === 'ne' ? 'सेवाहरू' : 'Services', view: 'services' },
-    { label: lang === 'ne' ? 'हाम्रो बारेमा' : 'About', view: 'about' },
-    { label: lang === 'ne' ? 'ज्ञान केन्द्र' : 'Guides', view: 'blog' },
-    { label: lang === 'ne' ? 'सम्पर्क' : 'Contact', view: 'contact' },
+  const navItems: { label: string; id: string }[] = [
+    { label: lang === 'ne' ? 'गृहपृष्ठ' : 'Home', id: 'home' },
+    { label: lang === 'ne' ? 'उत्पादनहरू' : 'Products', id: 'products' },
+    { label: lang === 'ne' ? 'सेवाहरू' : 'Services', id: 'services' },
+    { label: lang === 'ne' ? 'हाम्रो बारेमा' : 'About', id: 'about' },
+    { label: lang === 'ne' ? 'ज्ञान केन्द्र' : 'Guides', id: 'guides' },
+    { label: lang === 'ne' ? 'सम्पर्क' : 'Contact', id: 'contact' },
   ];
 
-  const handleItemClick = (view: ActiveView) => {
-    onNavigate(view);
+  const handleItemClick = (id: string) => {
     setIsMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    onNavigate(id);
   };
 
   return (
@@ -78,12 +73,6 @@ export const Header: React.FC<HeaderProps> = ({
             }`}>
               {lang === 'ne' ? 'डी एण्ड के हार्डवेयर तथा स्टेसनरी' : 'D&K Hardware & Stationery'}
             </span>
-            <p className={`text-[10px] uppercase tracking-widest font-bold mt-0.5 flex items-center gap-1 ${
-              theme === 'light' ? 'text-gray-500' : 'text-slate-400'
-            }`}>
-              <ShieldCheck className="w-3 h-3 text-[#f97316]" />
-              <span>{lang === 'ne' ? 'कैलाश चोक, मध्यपुर थिमी' : 'Kailash Chowk, Thimi, Nepal'}</span>
-            </p>
           </div>
         </button>
 
@@ -91,11 +80,11 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="hidden lg:flex items-center gap-6">
           <nav className="flex gap-6 font-semibold text-xs sm:text-sm">
             {navItems.map((item) => {
-              const isActive = activeView === item.view;
+              const isActive = activeSection === item.id;
               return (
                 <button
-                  key={item.view}
-                  onClick={() => handleItemClick(item.view)}
+                  key={item.id}
+                  onClick={() => handleItemClick(item.id)}
                   className={`transition-colors cursor-pointer select-none py-1 ${
                     isActive
                       ? 'text-[#f97316] font-bold'
@@ -175,7 +164,8 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Globe size={13} className="text-[#f97316]" />
-            <span>{lang === 'ne' ? 'EN' : 'ने'}</span>
+            <span className="hidden md:inline whitespace-nowrap">{lang === 'ne' ? 'English' : 'नेपाली'}</span>
+            <span className="md:hidden whitespace-nowrap">{lang === 'ne' ? 'EN' : 'ने'}</span>
           </button>
 
           <button
@@ -197,11 +187,11 @@ export const Header: React.FC<HeaderProps> = ({
         }`}>
           <nav className="flex flex-col gap-2">
             {navItems.map((item) => {
-              const isActive = activeView === item.view;
+              const isActive = activeSection === item.id;
               return (
                 <button
-                  key={item.view}
-                  onClick={() => handleItemClick(item.view)}
+                  key={item.id}
+                  onClick={() => handleItemClick(item.id)}
                   className={`text-left text-sm font-semibold p-2.5 rounded-xl transition-colors flex items-center justify-between ${
                     isActive
                       ? 'text-[#f97316] font-bold'

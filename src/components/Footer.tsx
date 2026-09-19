@@ -18,14 +18,14 @@ import {
   CreditCard
 } from 'lucide-react';
 import { BUSINESS_INFO } from '../data/products';
-import { ActiveView } from '../types';
 
 interface FooterProps {
   lang: 'en' | 'ne';
-  onNavigate?: (view: ActiveView) => void;
+  onNavigateSection?: (sectionId: string) => void;
+  onOpenLegal?: (type: 'privacy' | 'terms') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ lang, onNavigateSection, onOpenLegal }) => {
   const currentYear = new Date().getFullYear();
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [activeQrTab, setActiveQrTab] = useState<'fonepay' | 'esewa' | 'khalti' | 'bank'>('fonepay');
@@ -43,10 +43,9 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleNav = (view: ActiveView) => {
-    if (onNavigate) {
-      onNavigate(view);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleNav = (sectionId: string) => {
+    if (onNavigateSection) {
+      onNavigateSection(sectionId);
     }
   };
 
@@ -184,7 +183,7 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
               </li>
               <li>
                 <button
-                  onClick={() => handleNav('blog')}
+                  onClick={() => handleNav('guides')}
                   className="hover:text-white transition-colors cursor-pointer"
                 >
                   {lang === 'ne' ? 'ज्ञान केन्द्र र ब्लग (Guides)' : 'DIY & Buying Guides'}
@@ -203,26 +202,6 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
 
           {/* Location & Opening Hours */}
           <div className="space-y-3">
-            <h4 className="text-white font-bold text-xs uppercase tracking-wider">
-              {lang === 'ne' ? 'ठेगाना र खुल्ने समय' : 'Location & Hours'}
-            </h4>
-            <div className="flex items-start gap-2 text-xs text-gray-300">
-              <MapPin className="w-4 h-4 text-[#f97316] flex-shrink-0 mt-0.5" />
-              <div className="space-y-0.5">
-                <div className="text-white font-medium">Kailash Chowk, Madhyapur Thimi</div>
-                <div>Bhaktapur, Bagmati Province, 88400</div>
-                <div className="text-gray-400">Nepal</div>
-                <a
-                  href={BUSINESS_INFO.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#f97316] hover:underline inline-block pt-1 text-[11px]"
-                >
-                  {lang === 'ne' ? 'Google Maps मा खोल्नुहोस् →' : 'View on Google Maps →'}
-                </a>
-              </div>
-            </div>
-
             <div className="pt-2 border-t border-slate-800 text-xs text-gray-300 space-y-1">
               <div className="flex items-center gap-1.5 text-white font-semibold">
                 <Clock className="w-3.5 h-3.5 text-[#f97316]" />
@@ -355,13 +334,13 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
           <div className="flex flex-wrap items-center gap-3 sm:gap-6">
             <span>© {currentYear} {BUSINESS_INFO.legalName}. {lang === 'ne' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}</span>
             <button
-              onClick={() => handleNav('privacy')}
+              onClick={() => onOpenLegal?.('privacy')}
               className="hover:text-white underline cursor-pointer"
             >
               {lang === 'ne' ? 'गोपनीयता नीति (Privacy)' : 'Privacy Policy'}
             </button>
             <button
-              onClick={() => handleNav('terms')}
+              onClick={() => onOpenLegal?.('terms')}
               className="hover:text-white underline cursor-pointer"
             >
               {lang === 'ne' ? 'सर्तहरू (Terms)' : 'Terms of Service'}
@@ -406,9 +385,7 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
             <h3 className="text-xl font-black tracking-tight">
               {BUSINESS_INFO.name}
             </h3>
-            <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5 mb-4">
-              Kailash Chowk, Thimi • PAN: 609823145
-            </p>
+            
 
             {/* Modal Tabs */}
             <div className="flex gap-1 p-1 bg-gray-100 dark:bg-slate-800 rounded-xl mb-4 text-xs font-bold">
@@ -524,7 +501,7 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
                 <span>{lang === 'ne' ? 'रसिद ह्वाट्सएपमा पठाउनुहोस्' : 'Send Payment Slip via WhatsApp'}</span>
               </a>
 
-              {onNavigate && (
+              {onNavigateSection && (
                 <button
                   onClick={() => {
                     setIsQrModalOpen(false);
@@ -532,7 +509,7 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigate }) => {
                   }}
                   className="w-full text-xs text-[#1e3a8a] dark:text-blue-400 font-bold hover:underline py-1"
                 >
-                  {lang === 'ne' ? 'पूर्ण सम्पर्क तथा भुक्तानी पृष्ठ हेर्नुहोस् →' : 'View Full Payment & Contact Page →'}
+                  {lang === 'ne' ? 'पूर्ण सम्पर्क तथा भुक्तानी खण्ड हेर्नुहोस् →' : 'View Full Payment & Contact Section →'}
                 </button>
               )}
             </div>
