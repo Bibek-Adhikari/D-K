@@ -31,7 +31,7 @@ const SOCIAL_LINKS = {
 
 // On desktop: compact radial arc spreading upper-left
 // Spread from 75° → 225°
-const DESKTOP_ANGLES = [75, 115, 165, 225];
+const DESKTOP_ANGLES = [75, 105, 135, 165, 195, 225];
 const DESKTOP_RADIUS = 100; // px from button center
 
 // On mobile: straight vertical column going up
