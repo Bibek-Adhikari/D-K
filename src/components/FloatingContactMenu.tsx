@@ -65,6 +65,7 @@ export const FloatingContactMenu: React.FC<FloatingContactMenuProps> = ({
     { id: 'facebook', icon: Facebook, color: '#1877F2', href: SOCIAL_LINKS.facebook, label: 'Facebook' },
     { id: 'bot', icon: Bot, color: '#2563EB', onClick: () => { onOpenChat(); setIsOpen(false); }, label: 'AI Chat' },
     { id: 'tiktok', icon: TiktokIcon, color: '#010101', href: SOCIAL_LINKS.tiktok, label: 'TikTok', fillIcon: true },
+    { id: 'phone', icon: Phone, color: '#F97316', href: 'tel:9851056522', label: lang === 'ne' ? '९८५१०५६५२२' : 'Call 9851056522' },
   ];
 
   // Main button size
