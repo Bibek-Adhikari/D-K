@@ -69,7 +69,7 @@ export const LegalPages: React.FC<LegalPagesProps> = ({ type, lang, onBack }) =>
                     4. Contact Details
                   </h3>
                   <p>
-                    For privacy inquiries or to update your submitted contractor profile, contact us at 01-5925757 or email {BUSINESS_INFO.email}.
+                    For privacy inquiries or to update your submitted contractor profile, WhatsApp us at 9851056522 or email {BUSINESS_INFO.email}.
                   </p>
                 </section>
               </div>

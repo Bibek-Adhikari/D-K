@@ -11,8 +11,8 @@ export const BUSINESS_INFO = {
   phone: '01-5925757',
   phoneDisplay: '01-5925757',
   phoneTel: 'tel:01-5925757',
-  whatsappNumber: '+9779842692437',
-  whatsappUrl: 'https://wa.me/9779842692437?text=Namaste%20D%26K%20Hardware%20and%20Stationery%2C%20I%20have%20an%20inquiry...',
+  whatsappNumber: '+9779851056522',
+  whatsappUrl: 'https://wa.me/9779851056522?text=Namaste%20D%26K%20Hardware%20and%20Stationery%2C%20I%20have%20an%20inquiry...',
   email: 'dkhardwarestationery@gmail.com',
   website: 'https://dkhardwarestationery.com.np',
   hours: {
@@ -395,8 +395,8 @@ export const STORE_FAQS: FaqItem[] = [
     category: 'Hardware',
     question: 'Do you provide quote estimates for construction projects?',
     questionNe: 'के तपाईंहरू निर्माण आयोजनाका लागि दररेट कोटेसन उपलब्ध गराउनुहुन्छ?',
-    answer: 'Yes! Contractors and homeowners can submit their item lists directly by phone at 01-5925757, or via WhatsApp at +977-9842692437. We provide prompt itemized wholesale estimates with VAT compliance.',
-    answerNe: 'अवश्य! तपाईं आफ्नो सामानको सूची फोन (०१-५९२५७५७) वा ह्वाट्सएप मार्फत पठाउन सक्नुहुन्छ। हामी तत्काल थोक मूल्यमा कोटेसन प्रदान गर्दछौं।',
+    answer: 'Yes! Contractors and homeowners can submit their item lists directly via WhatsApp at +977-9851056522. We provide prompt itemized wholesale estimates with VAT compliance.',
+     answerNe: 'अवश्य! तपाईं आफ्नो सामानको सूची व्हाट्सएप (९८५१०५६५२२) मार्फत पठाउन सक्नुहुन्छ। हामी तत्काल थोक मूल्यमा कोटेसन प्रदान गर्दछौं।',
   },
   {
     category: 'Hardware',

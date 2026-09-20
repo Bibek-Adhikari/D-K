@@ -66,30 +66,34 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
 
         {/* 4 Contact Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
-          {/* Phone */}
+          {/* WhatsApp Primary */}
           <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-xs flex flex-col justify-between">
             <div>
               <div className="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/60 text-[#f97316] flex items-center justify-center mb-4">
                 <Phone className="w-5 h-5 fill-current" />
               </div>
               <h3 className="font-bold text-base text-gray-900 dark:text-white">
-                {lang === 'ne' ? 'फोन नम्बर' : 'Phone Desk'}
+                {lang === 'ne' ? 'व्हाट्सएप सम्पर्क' : 'WhatsApp Desk'}
               </h3>
               <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
                 {lang === 'ne' ? 'स्टक तथा तत्काल दररेटको लागि' : 'Direct line for stocks & rates'}
               </p>
               <a
-                href={BUSINESS_INFO.phoneTel}
+                href={BUSINESS_INFO.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-3 block font-mono font-bold text-lg text-[#1e3a8a] dark:text-orange-400 hover:underline"
               >
-                01-5925757
+                9851056522
               </a>
             </div>
             <a
-              href={BUSINESS_INFO.phoneTel}
+              href={BUSINESS_INFO.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-4 text-xs font-bold text-[#f97316] hover:underline"
             >
-              {lang === 'ne' ? 'सिधै फोन गर्नुहोस् →' : 'Call Now →'}
+              {lang === 'ne' ? 'व्हाट्सएप गर्नुहोस् →' : 'WhatsApp Now →'}
             </a>
           </div>
 
@@ -106,7 +110,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                 {lang === 'ne' ? 'सामानको फोटो वा सूची पठाउन' : 'Send photos or lists'}
               </p>
               <div className="mt-3 font-mono font-bold text-base text-emerald-600">
-                +977-9842692437
+                +977-9851056522
               </div>
             </div>
             <a
@@ -215,10 +219,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ lang }) => {
                 </span>
               </div>
               <a
-                href={BUSINESS_INFO.phoneTel}
-                className="font-bold text-[#1e3a8a] dark:text-orange-400 hover:underline"
+                href={BUSINESS_INFO.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-bold text-emerald-600 hover:underline"
               >
-                01-5925757
+                9851056522
               </a>
             </div>
           </div>

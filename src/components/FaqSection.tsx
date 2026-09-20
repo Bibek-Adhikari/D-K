@@ -136,20 +136,13 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ lang, categoryFilter }) 
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <a
-              href={BUSINESS_INFO.phoneTel}
-              className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-[#f97316] hover:bg-orange-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 fill-current" />
-              <span>01-5925757</span>
-            </a>
-            <a
               href={BUSINESS_INFO.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md transition-colors"
             >
               <MessageCircle className="w-3.5 h-3.5" />
-              <span>WhatsApp</span>
+              <span>WhatsApp 9851056522</span>
             </a>
           </div>
         </div>

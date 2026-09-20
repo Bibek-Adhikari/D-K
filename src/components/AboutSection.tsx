@@ -72,11 +72,13 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ lang }) => {
             {/* Actions */}
             <div className="flex flex-wrap items-center gap-4">
               <a
-                href={BUSINESS_INFO.phoneTel}
-                className="inline-flex items-center gap-2 text-gray-800 dark:text-slate-200 hover:text-[#f97316] font-bold text-sm sm:text-base py-3.5 px-4 transition-colors"
+                href={BUSINESS_INFO.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-gray-800 dark:text-slate-200 hover:text-emerald-600 font-bold text-sm sm:text-base py-3.5 px-4 transition-colors"
               >
-                <Phone size={18} className="text-[#f97316] fill-current" />
-                <span>01-5925757</span>
+                <Phone size={18} className="text-emerald-600" />
+                <span>9851056522</span>
               </a>
             </div>
 

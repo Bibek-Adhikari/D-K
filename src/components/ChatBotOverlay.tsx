@@ -243,15 +243,17 @@ export const ChatBotOverlay: React.FC<ChatBotOverlayProps> = ({ isOpen, onClose,
           </button>
         </div>
 
-        {/* Call Banner */}
+        {/* WhatsApp Banner */}
         <div className="px-4 py-2 bg-gray-100 dark:bg-slate-950 border-t border-gray-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-gray-600 dark:text-slate-400">
           <span>{t.chat.callInstead}</span>
           <a
-            href="tel:01-5925757"
-            className="text-[#f97316] font-bold hover:underline inline-flex items-center gap-1"
+            href="https://wa.me/9779851056522"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-emerald-600 font-bold hover:underline inline-flex items-center gap-1"
           >
-            <Phone className="w-3 h-3 fill-current" />
-            <span>01-5925757</span>
+            <Phone className="w-3 h-3" />
+            <span>9851056522</span>
           </a>
         </div>
 

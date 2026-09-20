@@ -23,7 +23,7 @@ const TiktokIcon = ({ size, color, fill }: { size: number; color?: string; fill?
 );
 
 const SOCIAL_LINKS = {
-  whatsapp: "https://wa.me/977015925757?text=Namaste%20D%26K%20Hardware%20and%20Sanitary%2C%20I%20have%20an%20inquiry...",
+  whatsapp: "https://wa.me/9779851056522?text=Namaste%20D%26K%20Hardware%20and%20Sanitary%2C%20I%20have%20an%20inquiry...",
   facebook: "https://www.facebook.com",
   tiktok: "https://www.tiktok.com",
   phone: BUSINESS_INFO.phoneTel
@@ -31,7 +31,7 @@ const SOCIAL_LINKS = {
 
 // On desktop: compact radial arc spreading upper-left
 // Spread from 75° → 225°
-const DESKTOP_ANGLES = [75, 105, 135, 165, 195, 225];
+const DESKTOP_ANGLES = [75, 115, 165, 225];
 const DESKTOP_RADIUS = 100; // px from button center
 
 // On mobile: straight vertical column going up
@@ -61,11 +61,10 @@ export const FloatingContactMenu: React.FC<FloatingContactMenuProps> = ({
   }, []);
 
   const menuItems = [
-    { id: 'whatsapp', icon: MessageCircle, color: '#25D366', href: SOCIAL_LINKS.whatsapp, label: 'WhatsApp', fillIcon: true },
+    { id: 'whatsapp', icon: MessageCircle, color: '#25D366', href: SOCIAL_LINKS.whatsapp, label: 'WhatsApp 9851056522', fillIcon: true },
     { id: 'facebook', icon: Facebook, color: '#1877F2', href: SOCIAL_LINKS.facebook, label: 'Facebook' },
     { id: 'bot', icon: Bot, color: '#2563EB', onClick: () => { onOpenChat(); setIsOpen(false); }, label: 'AI Chat' },
     { id: 'tiktok', icon: TiktokIcon, color: '#010101', href: SOCIAL_LINKS.tiktok, label: 'TikTok', fillIcon: true },
-    { id: 'phone', icon: Phone, color: '#F97316', href: SOCIAL_LINKS.phone, label: lang === 'ne' ? '०१-५९२५७५७' : 'Call 01-5925757' },
   ];
 
   // Main button size

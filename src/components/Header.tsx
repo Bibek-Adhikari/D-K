@@ -207,11 +207,13 @@ export const Header: React.FC<HeaderProps> = ({
             })}
 
             <a
-              href={BUSINESS_INFO.phoneTel}
-              className="bg-[#f97316] text-white p-3 rounded-xl font-bold flex justify-center items-center gap-2 mt-3 shadow-md text-xs"
+              href={BUSINESS_INFO.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-emerald-600 text-white p-3 rounded-xl font-bold flex justify-center items-center gap-2 mt-3 shadow-md text-xs"
             >
               <Phone size={16} />
-              <span>{lang === 'ne' ? 'कल गर्नुहोस्: ०१-५९२५७५७' : 'Call Store: 01-5925757'}</span>
+              <span>{lang === 'ne' ? 'व्हाट्सएप: ९८५१०५६५२२' : 'WhatsApp: 9851056522'}</span>
             </a>
           </nav>
         </div>

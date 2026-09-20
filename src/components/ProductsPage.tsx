@@ -30,15 +30,17 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
             </h3>
             <p className="text-sm text-gray-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
               {lang === 'ne'
-                ? 'हामीसँग अन्य थुप्रै सामानहरू पसलमा उपलब्ध छन्। कृपया ०१-५९२५७५७ मा सिधै सोधपुछ गर्नुहोस्।'
-                : 'We carry thousands of additional unlisted hardware and stationery lines. Call our sales desk directly!'}
+                ? 'हामीसँग अन्य थुप्रै सामानहरू पसलमा उपलब्ध छन्। कृपया ९८५१०५६५२२ मा व्हाट्सएप गर्नुहोस्।'
+                : 'We carry thousands of additional unlisted hardware and stationery lines. WhatsApp our sales desk directly!'}
             </p>
             <a
-              href={BUSINESS_INFO.phoneTel}
-              className="mt-4 inline-flex items-center gap-2 bg-[#f97316] text-white px-5 py-2.5 rounded-xl font-bold text-sm"
+              href={BUSINESS_INFO.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm"
             >
               <Phone className="w-4 h-4" />
-              <span>01-5925757</span>
+              <span>9851056522</span>
             </a>
           </div>
         ) : (
@@ -130,11 +132,13 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
           </div>
           <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
             <a
-              href={BUSINESS_INFO.phoneTel}
-              className="bg-white text-[#1e3a8a] hover:bg-gray-100 font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md transition-colors flex items-center justify-center gap-2"
+              href={BUSINESS_INFO.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-md transition-colors flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4 fill-current" />
-              <span>01-5925757</span>
+              <span>9851056522</span>
             </a>
           </div>
         </div>

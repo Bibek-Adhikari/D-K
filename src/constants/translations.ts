@@ -20,7 +20,7 @@ export const translations = {
       badge: 'Direct Wholesale & Retail Hardware Supplier • Madhyapur Thimi',
       title: 'D&k Hardware and Sanitary pvt ltd',
       desc: 'Your certified regional source for premium CPVC/PPR plumbing, luxury sanitaryware, professional power tools, and comprehensive building supplies. Supplying contractors, plumbers, and homeowners with authentic brands at guaranteed wholesale prices.',
-      callBtn: 'Call Now: 01-5925757',
+      callBtn: 'WhatsApp: 9851056522',
       quoteBtn: 'Request Quote',
       directionsBtn: 'Kailash Chowk, Thimi',
       profileTitle: 'Store Highlights',
@@ -69,14 +69,14 @@ export const translations = {
       loadingDockNote: 'Prime road frontage with vehicular loading space',
       phoneTitle: 'Direct Landline & Orders',
       phoneDesc: 'Call for instant stock verification, delivery dispatch, and wholesale quotes.',
-      dialBtn: 'Dial 01-5925757',
+      dialBtn: 'WhatsApp 9851056522',
       hoursTitle: 'Opening Hours',
       hoursSubtitle: 'Open 7 days a week for uninterrupted contractor supplies and emergency fittings.',
       getDirections: 'Get Directions on Google Maps',
       interactiveMap: 'Interactive Map Location:',
       openMapApp: 'Open in Google Maps App',
       dockFacility: 'Easy loading space for tippers, pickup trucks, and delivery vehicles.',
-      callAhead: 'Call ahead for ready order pickup: 01-5925757'
+      callAhead: 'WhatsApp ahead for ready pickup: 9851056522'
     },
     footer: {
       desc: 'Premier partner for certified CPVC/PPR plumbing pipes, designer sanitary fixtures, high-torque power tools, and building hardware in Madhyapur Thimi, Nepal.',
@@ -93,7 +93,7 @@ export const translations = {
       subtitle: 'Kailash Chowk, Thimi • Ask in English or Nepali',
       placeholder: 'Ask about pipes, sanitaryware, or store hours...',
       send: 'Send',
-      callInstead: 'Or Call Us Directly: 01-5925757',
+      callInstead: 'Or WhatsApp Us: 9851056522',
       quickPrompts: [
         'Do you have CPVC pipes in stock?',
         'Where are you located in Thimi?',
@@ -106,7 +106,7 @@ export const translations = {
       commitment: 'Commitment',
       location: 'Location & Hours',
       contact: 'Contact',
-      callCta: 'Call Now: 01-5925757'
+      callCta: 'WhatsApp: 9851056522'
     }
   },
   ne: {
@@ -130,7 +130,7 @@ export const translations = {
       badge: 'प्रत्यक्ष थोक तथा खुद्रा हार्डवेयर आपूर्तिकर्ता • मध्यपुर थिमी',
       title: 'डी एण्ड के हार्डवेयर एण्ड सेनेटरी प्रा. लि.',
       desc: 'गुणस्तरीय सीपीभीसी र पीपीआर प्लम्बिङ पाइप, आधुनिक सेनेटरीवेयर, भरपर्दा पावर टुल्स तथा सम्पूर्ण निर्माण सामग्रीहरूको आधिकारिक केन्द्र। ठेकेदार, प्लम्बर तथा घरधनीहरूलाई उचित थोक मूल्यमा सामान उपलब्ध गराउँदै।',
-      callBtn: 'सम्पर्क: ०१-५९२५७५७',
+      callBtn: 'व्हाट्सएप: ९८५१०५६५२२',
       quoteBtn: 'कोटेसन अनुरोध',
       directionsBtn: 'कैलाश चोक, थिमी',
       profileTitle: 'पसलको मुख्य विशेषताहरू',
@@ -179,14 +179,14 @@ export const translations = {
       loadingDockNote: 'सामान लोड तथा अनलोड गर्न गाडीको सहज पहुँच',
       phoneTitle: 'सम्पर्क तथा अर्डर फोन',
       phoneDesc: 'स्टक बुझ्न, सामान पठाउन तथा थोक मूल्यको लागि फोन गर्नुहोस्।',
-      dialBtn: 'फोन गर्नुहोस्: ०१-५९२५७५७',
+      dialBtn: 'व्हाट्सएप: ९८५१०५६५२२',
       hoursTitle: 'खुल्ने समय',
       hoursSubtitle: 'हप्ताको सातै दिन निर्माण सामग्री तथा प्लम्बिङ सामानको लागि खुला रहने।',
       getDirections: 'Google Maps मा बाटो हेर्नुहोस्',
       interactiveMap: 'नक्सामा पसलको लोकेसन:',
       openMapApp: 'Google Maps एपमा खोल्नुहोस्',
       dockFacility: 'टिपर, पिकअप र डेलिभरी गाडीहरूको लागि सजिलो लोडिङ ठाउँ।',
-      callAhead: 'तयार सामान लिन आउनुअघि फोन गर्नुहोस्: ०१-५९२५७५७'
+      callAhead: 'तयार सामान लिन आउनुअघि व्हाट्सएप गर्नुहोस्: ९८५१०५६५२२'
     },
     footer: {
       desc: 'मध्यपुर थिमी, नेपालमा प्रमाणित सीपीभीसी/पीपीआर प्लम्बिङ पाइप, आधुनिक सेनेटरीवेयर, पावर टुल्स र हार्डवेयरको भरपर्दो केन्द्र।',
@@ -203,7 +203,7 @@ export const translations = {
       subtitle: 'कैलाश चोक, थिमी • नेपाली वा अङ्ग्रेजीमा सोध्नुहोस्',
       placeholder: 'पाइप, धारा वा पसल खुल्ने समयबारे सोध्नुहोस्...',
       send: 'पठाउनुहोस्',
-      callInstead: 'वा सिधै फोन गर्नुहोस्: ०१-५९२५७५७',
+      callInstead: 'वा सिधै व्हाट्सएप गर्नुहोस्: ९८५१०५६५२२',
       quickPrompts: [
         'सीपीभीसी पाइप स्टकमा छ?',
         'पसल थिमीको कुन ठाउँमा छ?',
@@ -216,7 +216,7 @@ export const translations = {
       commitment: 'प्रतिबद्धता',
       location: 'लोकेसन र समय',
       contact: 'सम्पर्क',
-      callCta: 'कल गर्नुहोस्: ०१-५९२५७५७'
+      callCta: 'व्हाट्सएप: ९८५१०५६५२२'
     }
   }
 };

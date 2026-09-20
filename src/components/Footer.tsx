@@ -221,23 +221,16 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigateSection, onOpenL
             </h4>
             <div className="space-y-2">
               <a
-                href={BUSINESS_INFO.phoneTel}
-                id="footer-phone-cta"
-                className="flex items-center gap-2 text-white hover:text-[#f97316] text-lg font-mono font-bold transition-colors"
-              >
-                <Phone className="w-4 h-4 text-[#f97316] fill-current" />
-                <span>{BUSINESS_INFO.phoneDisplay}</span>
-              </a>
-
-              <a
                 href={BUSINESS_INFO.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
+                id="footer-phone-cta"
+                className="flex items-center gap-2 text-white hover:text-emerald-400 text-lg font-mono font-bold transition-colors"
               >
-                <MessageCircle className="w-3.5 h-3.5" />
-                <span>WhatsApp: +977-9842692437</span>
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                <span>9851056522</span>
               </a>
+              <p className="text-[11px] text-gray-400">WhatsApp • Viber • Direct Call</p>
 
               <a
                 href={`mailto:${BUSINESS_INFO.email}`}
@@ -476,9 +469,9 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigateSection, onOpenL
                     : (lang === 'ne' ? 'NepalPay वा Khalti वालेटबाट स्क्यान गर्नुहोस्' : 'Scan with NepalPay or Khalti')}
                 </p>
                 <div className="flex items-center justify-center gap-2 text-xs font-mono text-gray-500">
-                  <span>Merchant ID: {activeQrTab === 'esewa' ? '9842692437' : 'DK-88400'}</span>
+                  <span>Merchant ID: {activeQrTab === 'esewa' ? '9851056522' : 'DK-88400'}</span>
                   <button
-                    onClick={() => copyToClipboard(activeQrTab === 'esewa' ? '9842692437' : 'DK-88400', 'mid')}
+                    onClick={() => copyToClipboard(activeQrTab === 'esewa' ? '9851056522' : 'DK-88400', 'mid')}
                     className="text-[#f97316] font-sans font-bold hover:underline"
                   >
                     {copiedField === 'mid' ? 'Copied!' : 'Copy'}
@@ -490,7 +483,7 @@ export const Footer: React.FC<FooterProps> = ({ lang, onNavigateSection, onOpenL
             {/* WhatsApp Verification CTA */}
             <div className="mt-5 space-y-2">
               <a
-                href={`https://wa.me/9779842692437?text=${encodeURIComponent(
+                href={`https://wa.me/9779851056522?text=${encodeURIComponent(
                   'Namaste D&K Hardware and Stationery, I have completed a QR payment. Here is the receipt screenshot for dispatch.'
                 )}`}
                 target="_blank"

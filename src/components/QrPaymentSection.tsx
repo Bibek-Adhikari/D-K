@@ -367,9 +367,9 @@ export const QrPaymentSection: React.FC<QrPaymentSectionProps> = ({
                 </p>
 
                 <div className="mt-3 pt-3 border-t border-gray-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-gray-500 dark:text-slate-400 font-mono">
-                  <span>ID: {activeTab === 'esewa' ? '9842692437' : 'DK-88400'}</span>
+                  <span>ID: {activeTab === 'esewa' ? '9851056522' : 'DK-88400'}</span>
                   <button
-                    onClick={() => copyToClipboard(activeTab === 'esewa' ? '9842692437' : 'DK-88400', 'merchantId')}
+                    onClick={() => copyToClipboard(activeTab === 'esewa' ? '9851056522' : 'DK-88400', 'merchantId')}
                     className="flex items-center gap-1 text-[#f97316] hover:underline font-sans font-bold cursor-pointer"
                   >
                     {copiedField === 'merchantId' ? (
@@ -450,7 +450,7 @@ export const QrPaymentSection: React.FC<QrPaymentSectionProps> = ({
                       {lang === 'ne' ? 'रसिद ह्वाट्सएपमा पठाउनुहोस्' : 'Send Slip on WhatsApp'}
                     </span>
                     <span className="text-[11px] text-gray-500 dark:text-slate-400">
-                      {lang === 'ne' ? 'तुरुन्तै सामान डेलिभरी र भ्याट बिलको लागि स्क्रिनसट पठाउनुहोस्' : 'Share screenshot to +977-9842692437 for immediate dispatch'}
+                      {lang === 'ne' ? 'तुरुन्तै सामान डेलिभरी र भ्याट बिलको लागि स्क्रिनसट पठाउनुहोस्' : 'Share screenshot to +977-9851056522 for immediate dispatch'}
                     </span>
                   </div>
                 </div>
@@ -460,7 +460,7 @@ export const QrPaymentSection: React.FC<QrPaymentSectionProps> = ({
             {/* Direct WhatsApp Share Verification CTA */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <a
-                href={`https://wa.me/9779842692437?text=${encodeURIComponent(
+                href={`https://wa.me/9779851056522?text=${encodeURIComponent(
                   'Namaste D&K Hardware & Stationery! I have completed the QR / Bank payment for my order. Attached is the payment slip/screenshot.'
                 )}`}
                 target="_blank"
@@ -474,11 +474,13 @@ export const QrPaymentSection: React.FC<QrPaymentSectionProps> = ({
               </a>
 
               <a
-                href={BUSINESS_INFO.phoneTel}
-                className="inline-flex items-center justify-center gap-2 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-800 dark:text-slate-200 font-bold text-xs sm:text-sm py-3 px-4 rounded-xl transition-all cursor-pointer"
+                href={BUSINESS_INFO.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm py-3 px-4 rounded-xl transition-all cursor-pointer"
               >
-                <Info className="w-4 h-4 text-[#f97316]" />
-                <span>{lang === 'ne' ? 'भुक्तानी सोधपुछ: ०१-५९२५७५७' : 'Call Desk: 01-5925757'}</span>
+                <Info className="w-4 h-4" />
+                <span>{lang === 'ne' ? 'व्हाट्सएप: ९८५१०५६५२२' : 'WhatsApp: 9851056522'}</span>
               </a>
             </div>
 

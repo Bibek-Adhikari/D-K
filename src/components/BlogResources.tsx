@@ -94,16 +94,18 @@ export const BlogResources: React.FC<BlogResourcesProps> = ({
                 <p className="text-xs text-gray-600 dark:text-slate-300 mt-0.5">
                   {lang === 'ne'
                     ? 'कैलाश चोक, मध्यपुर थिमी शाखामा तत्काल स्टक प्रमाणित गरी उठाउन वा मगाउन सक्नुहुन्छ।'
-                    : 'Call 01-5925757 for direct store assistance.'}
+                    : 'WhatsApp 9851056522 for direct store assistance.'}
                 </p>
               </div>
               <div className="flex items-center gap-2.5 w-full sm:w-auto">
                 <a
-                  href={BUSINESS_INFO.phoneTel}
-                  className="flex-1 sm:flex-initial bg-[#f97316] text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5"
+                  href={BUSINESS_INFO.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 sm:flex-initial bg-emerald-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5"
                 >
-                  <Phone className="w-3.5 h-3.5 fill-current" />
-                  <span>Call</span>
+                  <Phone className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
                 </a>
               </div>
             </div>
