@@ -1,17 +1,9 @@
 import React from 'react';
 import {
-  Building2,
-  BookOpenCheck,
-  Wrench,
-  Truck,
-  CheckCircle2,
-  Phone,
-  MessageCircle,
   Clock,
   MapPin,
   ShieldAlert
 } from 'lucide-react';
-import { STORE_SERVICES, BUSINESS_INFO } from '../data/products';
 import { FaqSection } from './FaqSection';
 
 interface ServicesPageProps {
@@ -21,22 +13,7 @@ interface ServicesPageProps {
 
 export const ServicesPage: React.FC<ServicesPageProps> = ({
   lang,
-  onNavigateToContact,
-}) => {
-  const getIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Building2':
-        return <Building2 className="w-6 h-6 text-white" />;
-      case 'BookOpenCheck':
-        return <BookOpenCheck className="w-6 h-6 text-white" />;
-      case 'Wrench':
-        return <Wrench className="w-6 h-6 text-white" />;
-      case 'Truck':
-        return <Truck className="w-6 h-6 text-white" />;
-      default:
-        return <Building2 className="w-6 h-6 text-white" />;
-    }
-  };
+}: ServicesPageProps) => {
 
   const processSteps = [
     {
@@ -68,64 +45,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
   return (
     <div className="py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 4 Core Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {STORE_SERVICES.map((service) => (
-            <div
-              key={service.id}
-              className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-gray-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center gap-4 mb-5">
-                  <div className="w-12 h-12 rounded-2xl bg-[#1e3a8a] flex items-center justify-center shadow-md">
-                    {getIcon(service.iconName)}
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#f97316]">
-                      {service.targetAudience}
-                    </span>
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white leading-snug mt-0.5">
-                      {lang === 'ne' ? service.titleNe : service.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed mb-6">
-                  {lang === 'ne' ? service.descriptionNe : service.description}
-                </p>
-
-                <div className="space-y-2.5 pt-4 border-t border-gray-100 dark:border-slate-800">
-                  {service.details.map((detail, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700 dark:text-slate-200">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
-                      <span>{detail}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-8 pt-4 border-t border-gray-100 dark:border-slate-800 flex flex-wrap items-center gap-3">
-                <button
-                  onClick={onNavigateToContact}
-                  className="bg-[#1e3a8a] hover:bg-blue-900 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-xs cursor-pointer"
-                >
-                  <Phone className="w-3.5 h-3.5" />
-                  <span>{lang === 'ne' ? 'सम्पर्क गर्नुहोस्' : 'Contact Store'}</span>
-                </button>
-                <a
-                  href={BUSINESS_INFO.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-xs"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  <span>WhatsApp</span>
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* How Procurement Works Workflow */}
         <div className="bg-gray-100 dark:bg-slate-800/50 rounded-3xl p-6 sm:p-10 mb-16 border border-gray-200 dark:border-slate-700">
           <div className="text-center max-w-2xl mx-auto mb-10">
